@@ -1,0 +1,27 @@
+{
+  "base_core": "rp2040:rp2040@6.2.0",
+  "base_board": "generic_rp2350",
+  "selected_options": {
+    "flash": "4194304_0",
+    "arch": "arm",
+    "freq": "150",
+    "variantchip": "RP2350B",
+    "psramcs": "GPIOnone",
+    "psram": "0mb",
+    "psramfreq": "freq104",
+    "opt": "Small",
+    "os": "none",
+    "profile": "Disabled",
+    "rtti": "Disabled",
+    "stackprotect": "Disabled",
+    "exceptions": "Disabled",
+    "dbgport": "Disabled",
+    "dbglvl": "None",
+    "usbstack": "picosdk",
+    "ipbtstack": "ipv4only",
+    "uploadmethod": "default"
+  },
+  "hardware_evidence": "reference/board/context.json",
+  "fqbn": "logistic15u:rp2040:logistic15u",
+  "runtime_pin_defaults": "Upstream generic_rp2350 variant; actual peripheral pins remain in the original PuppyBot API."
+}

@@ -1,0 +1,35 @@
+{
+  "packages": [
+    {
+      "name": "logistic15u",
+      "maintainer": "PrinceBot",
+      "websiteURL": "https://github.com/Amornthep-ra/Logistic15U-PuppyBot6",
+      "email": "",
+      "help": {
+        "online": "https://github.com/Amornthep-ra/Logistic15U-PuppyBot6"
+      },
+      "platforms": [
+        {
+          "name": "Logistic15U-PuppyBot6",
+          "architecture": "rp2040",
+          "version": "0.1.0",
+          "category": "Contributed",
+          "help": {
+            "online": "https://github.com/Amornthep-ra/Logistic15U-PuppyBot6"
+          },
+          "boards": [
+            {
+              "name": "Logistic15U-PuppyBot6"
+            }
+          ],
+          "toolsDependencies": [],
+          "archiveFileName": "logistic15u-rp2040-0.1.0.zip",
+          "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.1.0.zip",
+          "checksum": "SHA-256:f65db16b352b1aa291c5afa14e0b803bc46f6963a3a9685a1d5a686318ab33cb",
+          "size": "11597"
+        }
+      ],
+      "tools": []
+    }
+  ]
+}

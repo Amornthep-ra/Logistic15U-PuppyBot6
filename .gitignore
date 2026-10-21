@@ -1,0 +1,5 @@
+.arduino-test/
+reference/legacy-imu/
+__pycache__/
+*.pyc
+

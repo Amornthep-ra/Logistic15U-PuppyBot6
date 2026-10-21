@@ -1,0 +1,3 @@
+name=Logistic15U-PuppyBot6
+version=0.1.0
+runtime.use_core_platform_path_for_runtime_platform_path=true

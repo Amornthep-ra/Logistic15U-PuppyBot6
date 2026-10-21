@@ -1,0 +1,722 @@
+{
+  "project_name": "Logistic15U-PuppyBot6",
+  "date": "2026-10-21",
+  "source_root": "C:\\Users\\User\\AppData\\Local\\Programs\\kbide\\boards\\PuppyBot6-New",
+  "status": "copied_only_not_ported_or_compiled",
+  "files": [
+    {
+      "source": "include/puppybot.h",
+      "destination": "Logistic15U-PuppyBot6/src/puppybot.h",
+      "bytes": 52365,
+      "sha256": "f883a3834a4cf72e3bf49ae0494f32edc6b172df905cfa465147bf46a507a47e",
+      "reason": "PuppyBot implementation or required IMU adapter"
+    },
+    {
+      "source": "include/PuppyBotIMU.h",
+      "destination": "Logistic15U-PuppyBot6/src/PuppyBotIMU.h",
+      "bytes": 7487,
+      "sha256": "2309d1b862c63c3b6cf2e16a2181a11231755e642275a3fedf202a3193b1f8b0",
+      "reason": "PuppyBot implementation or required IMU adapter"
+    },
+    {
+      "source": "include/PuppyBotTurnPID.h",
+      "destination": "Logistic15U-PuppyBot6/src/PuppyBotTurnPID.h",
+      "bytes": 30380,
+      "sha256": "b240a53785667f64716512bc4c66e5cd16a44b67cb498f10d02af22a1ed0e866",
+      "reason": "PuppyBot implementation or required IMU adapter"
+    },
+    {
+      "source": "include/KB_PIDFollowHelpers.h",
+      "destination": "Logistic15U-PuppyBot6/src/KB_PIDFollowHelpers.h",
+      "bytes": 4924,
+      "sha256": "a4e505de760e5200204a8a2a39f7be7eb5935b12742e5c57b1afb287b4c357ee",
+      "reason": "PuppyBot implementation or required IMU adapter"
+    },
+    {
+      "source": "include/ICM20948wire1.h",
+      "destination": "Logistic15U-PuppyBot6/src/ICM20948wire1.h",
+      "bytes": 4096,
+      "sha256": "746f95f154fb942d3c4133428d816675af8477bf5793debacbc2fa24bf8ae989",
+      "reason": "PuppyBot implementation or required IMU adapter"
+    },
+    {
+      "source": "include/HALwire1.h",
+      "destination": "Logistic15U-PuppyBot6/src/HALwire1.h",
+      "bytes": 891,
+      "sha256": "f5b334fc4f30123eb9e4bc4666e0018734f5bfaec77c416c5b890fcf422015df",
+      "reason": "PuppyBot implementation or required IMU adapter"
+    },
+    {
+      "source": "include/Invn/Devices/Device.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Device.h",
+      "bytes": 30119,
+      "sha256": "545e82f7b928dfe0f000f678e87e2f3e3c1cf3693b3ced3a63fac35ebec8f535",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/DeviceIcm20948.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/DeviceIcm20948.c",
+      "bytes": 23411,
+      "sha256": "98d4148b4430b7cc8c4110289415e16e8996d478ba976ad40ae6433134d2d916",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/DeviceIcm20948.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/DeviceIcm20948.h",
+      "bytes": 6645,
+      "sha256": "16f7bede5c9a4a3cbc6bcef70c7e9bdf0bad87a654d690b507c86d070beb53b3",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948.h",
+      "bytes": 8036,
+      "sha256": "6789911f57b40b041833d2c4c4f70a8150c5cdf72919f9a9fec9514bd4faef94",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Augmented.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Augmented.c",
+      "bytes": 9541,
+      "sha256": "1e3ab7c5ff33ec0437babd2fd45a3ebffd9ff924eb1baa68d6f9e0bdf259a4ee",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Augmented.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Augmented.h",
+      "bytes": 3878,
+      "sha256": "f91be2fe47550572d6319c651853d44f5f4adb023d1ed2ee062516c96ca6974b",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948AuxCompassAkm.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948AuxCompassAkm.c",
+      "bytes": 26685,
+      "sha256": "f3d474be9292b567e7ed6b1b2d896cf73eb0aefd2a067576d6673508190bbd13",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948AuxCompassAkm.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948AuxCompassAkm.h",
+      "bytes": 4696,
+      "sha256": "191d296f78476f528e634886c51f14b6319aa68aa04bca783fa66b312613af48",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948AuxTransport.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948AuxTransport.c",
+      "bytes": 7030,
+      "sha256": "2d5e12d28baff818ef7c791221ac7d8105d8e85919de1c8062b1ad4706a1b58f",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948AuxTransport.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948AuxTransport.h",
+      "bytes": 5249,
+      "sha256": "45da60d5bc45b88746868b9d7ae61625599e857713bbe052f9701a5ef90dd919",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseControl.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseControl.c",
+      "bytes": 62457,
+      "sha256": "0d4d893ff871d12ec1310a9ed2c1c7b00f39176e019aa1a3985d8ee5b23121e7",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseControl.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseControl.h",
+      "bytes": 11035,
+      "sha256": "67807b836997ba044678ff26cc7bb5b96f6027b763441d626b37fc4d2187d391",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseDriver.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseDriver.c",
+      "bytes": 22544,
+      "sha256": "3db8741b01525b6fdd903659cd5ae1f9a8fbcfd4ce13feadba56a19b527520c8",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseDriver.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948DataBaseDriver.h",
+      "bytes": 9540,
+      "sha256": "05c21ccfe423eb405ab103ec0af969dac349e7a9efb438e0a40a99945e140a59",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948DataConverter.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948DataConverter.c",
+      "bytes": 31638,
+      "sha256": "a9e2d72b742ac3359458420e881f8e0e70a65160918ecb44a93280434b3f7420",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948DataConverter.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948DataConverter.h",
+      "bytes": 13756,
+      "sha256": "9400a87ce6dc3b65782b3ece3c745b84350588ba860c3719f0891a1b7fb17737",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Defs.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Defs.h",
+      "bytes": 16308,
+      "sha256": "3bb4253c7f974f6d1f1046596735f2f5f01ccdac1c3dd990f08b9a4044ea95f3",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Dmp3Driver.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Dmp3Driver.c",
+      "bytes": 42920,
+      "sha256": "28f2814955d9563f1e426fb7a94c4e9154b7650f0e1f018edcac6c60d91acabf",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Dmp3Driver.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Dmp3Driver.h",
+      "bytes": 6441,
+      "sha256": "f0b18a4a93b79b511708b3d1893e41121064c4434b8ee00fd1e16b5c045f5986",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948LoadFirmware.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948LoadFirmware.c",
+      "bytes": 2761,
+      "sha256": "3ff69dd16b0fe407e82b4a7519351dc664a4bd69d97baa69884443d2666b8df3",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948LoadFirmware.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948LoadFirmware.h",
+      "bytes": 1592,
+      "sha256": "3c71f2d3076488929c33901830f6672af12c546b0e2b89ac7f15e452abb7dc85",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948MPUFifoControl.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948MPUFifoControl.c",
+      "bytes": 24145,
+      "sha256": "1399a50055e1f39e7d8398cef80c9c42ceb55f9fed004c134b5adcd623282178",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948MPUFifoControl.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948MPUFifoControl.h",
+      "bytes": 8341,
+      "sha256": "dfbb1b098d4b8f285ce8a99855080b20c55a6cc1f9b838a98fdd3ffc1a259cce",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948SelfTest.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948SelfTest.c",
+      "bytes": 18362,
+      "sha256": "bd943b7c8818c0957a7c9b5969f5c80c7348976cdde33dbc80019bb33697b485",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948SelfTest.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948SelfTest.h",
+      "bytes": 1768,
+      "sha256": "afd246bd992c326a6bc62a26763dd784b8f0b93602f6ee37edc2bba355a677f4",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Serif.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Serif.h",
+      "bytes": 3325,
+      "sha256": "aa8a6d1c4dedd8f7e224e4cf97538922f64012624ac850a5131a118f0608e8ab",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Setup.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Setup.c",
+      "bytes": 42342,
+      "sha256": "28baad33e774d99989e31eb6fb8aff01bcd0c6b184b26847a4f6845877eaa849",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Setup.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Setup.h",
+      "bytes": 5324,
+      "sha256": "dae5957f3c9d8f5282d6d089f6eccc14f373dc2e72c0b27ce8b3c985af6c718f",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Transport.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Transport.c",
+      "bytes": 13716,
+      "sha256": "01380e340e081f6ae2a80a14ed67e6d4ea2d9dcc39f7306710adcddc4a20696f",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Drivers/Icm20948/Icm20948Transport.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Drivers/Icm20948/Icm20948Transport.h",
+      "bytes": 5960,
+      "sha256": "5c2f7d8921164ba33a6cac634c3fbc167e254b6f4de5fb61ebeb8ae3427dcf53",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/HostSerif.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/HostSerif.c",
+      "bytes": 1825,
+      "sha256": "048b8b5232419d03b402d35f177dad3f3b0425199b59a748b763be1b992403b9",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/HostSerif.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/HostSerif.h",
+      "bytes": 9296,
+      "sha256": "275a30b4c78bd1c4318f51525134225481f23f340029142afc155530829cd0e6",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/Sensor.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/Sensor.c",
+      "bytes": 6161,
+      "sha256": "b6f90475e02c9a78db2dbaa90d7a862b4a7e0f9a90f81f04f7d826e7cddb4805",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/SensorConfig.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/SensorConfig.h",
+      "bytes": 8548,
+      "sha256": "eeb4c7efc55a29dae386cd8e7b77caced58dd6b7458f30039c38588b8dd7505f",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/SensorTypes.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/SensorTypes.h",
+      "bytes": 23027,
+      "sha256": "1ace3685a73a686e94c7d7885012f3d9611db1263d7ca12ad55f839a2e56e909",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/SerifHal.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/SerifHal.h",
+      "bytes": 6529,
+      "sha256": "3f7de65bd617cd95a990204499b04bdead24d718facadafc7c1f461899dbdc82",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/VSensorId.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/VSensorId.c",
+      "bytes": 3085,
+      "sha256": "64d1ad4b19758ee809fe49264e612d5cfb30a8ce9266da10945a49e4b2a013bb",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Devices/VSensorId.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Devices/VSensorId.h",
+      "bytes": 6867,
+      "sha256": "ac6fc966ad34e4fc952f96a7fc353a1d44176f8e04ee04263aae2a70143b05d5",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/DynamicProtocol/DynProtocol.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/DynamicProtocol/DynProtocol.c",
+      "bytes": 51258,
+      "sha256": "5eeb2537149216608baf2e8c41e61468c3e549e7ab1fdb9ed042999b74427aaf",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/DynamicProtocol/DynProtocol.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/DynamicProtocol/DynProtocol.h",
+      "bytes": 12845,
+      "sha256": "8ae1b64a51fc4dbd6d26ff83f900127a702c4f17d3372300a3b9eba9df04e7f3",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/DynamicProtocol/DynProtocolTransport.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/DynamicProtocol/DynProtocolTransport.h",
+      "bytes": 2345,
+      "sha256": "cdfd63e39dfd99989ad918e10b8ad080e0150b10bdca5c9669b5d6045b0de10e",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/DynamicProtocol/DynProtocolTransportUart.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/DynamicProtocol/DynProtocolTransportUart.c",
+      "bytes": 10368,
+      "sha256": "4d097ae59f8e1cd353d5963a415f27e3a00d465334e4a9c50f23023672866a77",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/DynamicProtocol/DynProtocolTransportUart.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/DynamicProtocol/DynProtocolTransportUart.h",
+      "bytes": 3500,
+      "sha256": "25a36724df2c4d49b3d1820195b478c1a72347fd849befd5c9ac05b66f9fae8f",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/CBinaryReader.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/CBinaryReader.h",
+      "bytes": 2234,
+      "sha256": "3d4db018142b71f6583d30192f796b88f0f1ed1f0ecef2e595510d2569027f96",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/CBinaryWriter.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/CBinaryWriter.h",
+      "bytes": 2485,
+      "sha256": "eae7a6081e6e9b2be5cc9702c1190ddb72ce7401e559286b11d52c1d97335ddc",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/DataConverter.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/DataConverter.c",
+      "bytes": 3097,
+      "sha256": "e7d98e58331d6a1bce1d6150028f1f557af359d8ef9edfdb0606089c025e4afc",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/DataConverter.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/DataConverter.h",
+      "bytes": 3743,
+      "sha256": "be445aec7db0b2e5109dcb274c52893d91c1ed99e02a53f9c1b44081bac5acd0",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/ErrorHelper.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/ErrorHelper.c",
+      "bytes": 2600,
+      "sha256": "57426b35232f97df184dc92b157f3c4c6674bf041400de489b462c431d7a8ce5",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/ErrorHelper.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/ErrorHelper.h",
+      "bytes": 2010,
+      "sha256": "ab44943801629cf574c455ca8026949ad83fe3e0b63e50ba90a12b3fecc21af1",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvAssert.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvAssert.h",
+      "bytes": 1819,
+      "sha256": "b592936df1066586e4860074080c1982374b984d37ddee993677618e05b23169",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvBasicMath.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvBasicMath.c",
+      "bytes": 2472,
+      "sha256": "27facd6b6ffe4e539fe9d67981a06b7ca90672349bbe9a00149a37f4729b028c",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvBasicMath.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvBasicMath.h",
+      "bytes": 2324,
+      "sha256": "da0d2125857ebf5c305cf50625d9e7f28e3b0b5ba9c547a487494e5a02f9e9e0",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvBits.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvBits.h",
+      "bytes": 2399,
+      "sha256": "390c94e1fe3dfc26172f990223dbf6ae624bfc3417406f1143e0fa96402a754d",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvCksum.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvCksum.c",
+      "bytes": 886,
+      "sha256": "690410fef748d634e56ca677b568f80b3a137f88131c35d5f502e6b0aa90a7e2",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvCksum.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvCksum.h",
+      "bytes": 1117,
+      "sha256": "d014da6c4b193346198c13741d6ea7f166f86e4389ddcf660d467377102aeeab",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvFormat.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvFormat.c",
+      "bytes": 1294,
+      "sha256": "8d8ac931cf90bddab97431e51f2fadd8b99b84955db724cbfba785d3548f0e6d",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvFormat.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvFormat.h",
+      "bytes": 1220,
+      "sha256": "73bf8bc69157f0aed923273a43f5a7c87de30cfd453d24b0d1c19359891cf4b4",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvList.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvList.c",
+      "bytes": 1560,
+      "sha256": "6087b37bf1efa714aaaca2fc5a454343ae0a5996c10c19f6a6e3b6d3d0b54ed7",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvList.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvList.h",
+      "bytes": 2600,
+      "sha256": "8c0bc9869484241aa4de8059c39cbdd7ab60bfdd2302444a214e8807011ad01d",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvPrintf.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvPrintf.c",
+      "bytes": 6345,
+      "sha256": "52c9f68550e7359b273f6b69c00f0574f71f21dfba824c353cdf470cc5e4ac84",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvPrintf.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvPrintf.h",
+      "bytes": 1413,
+      "sha256": "75e3a35baefb7fd5a8e1d81cc6980f932d9b81ab2c47202a8c1f776b9b31224d",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvProtocol.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvProtocol.c",
+      "bytes": 6897,
+      "sha256": "14e189fe861f68fd4cd7f89f8a34d7e5657769cae5a1bb74cb877eeed2212be1",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvProtocol.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvProtocol.h",
+      "bytes": 5925,
+      "sha256": "f08a61b21acf0d3904b623f718f2f52d9e49820d628e1980ecb3dab3f842ab64",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvQueue.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvQueue.c",
+      "bytes": 9570,
+      "sha256": "d7ba395147450793ac4304385ac99dd555ae23958dec750bea8ceb3386a3bd17",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvQueue.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvQueue.h",
+      "bytes": 10769,
+      "sha256": "8f2e5a9b1c45a25933343e73b652a7700dbe73572d95c5d1cd3a1fcd30a068de",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvScheduler.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvScheduler.c",
+      "bytes": 7502,
+      "sha256": "d2cd78b3c19030797f6add6b7042958d2ec67e0388ea637450351ce931e69316",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvScheduler.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvScheduler.h",
+      "bytes": 12470,
+      "sha256": "b6db31c112f4d449e60105609fd11bdcf87ffa8625285b11a9e9e6588283e63d",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/InvString.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/InvString.h",
+      "bytes": 2748,
+      "sha256": "59a8adaa1469000d8b73b80f930dfc55c492281a62a801c324b80dc319dd58a8",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/Logger.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/Logger.c",
+      "bytes": 1990,
+      "sha256": "189ae2bd141f6688d7e9656960708943090acf8ed63dea2b9851e71ed5a9a3dd",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/Logger.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/Logger.h",
+      "bytes": 4927,
+      "sha256": "6f1951fb8068084117e0eafcb0dba678e1f2ed15e0b9fdfec3122bc3bc8d9f13",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/Message.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/Message.c",
+      "bytes": 2626,
+      "sha256": "4aca73e323229933ffedc6b5315ee1baa4d45e5f070fc8a0d2c349cb70ac7628",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/Message.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/Message.h",
+      "bytes": 6115,
+      "sha256": "bb591c5a9017d197389a82f553ac9a2beeedb4b40100ff6a95c3186fb3fdf784",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/RingBuffer.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/RingBuffer.h",
+      "bytes": 6368,
+      "sha256": "286b75430082baa3f550f46b715c8b686f28a0eecd80b6396701e240884ae630",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/RingByteBuffer.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/RingByteBuffer.c",
+      "bytes": 2336,
+      "sha256": "e97f69224a18930267246e1aad01b16f38003838540408db33ee181de93386b1",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/RingByteBuffer.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/RingByteBuffer.h",
+      "bytes": 4318,
+      "sha256": "a51aea2c743c6a5a635d082a8cd4fee6571744cecf92f0c7a0b3a81af23f14fa",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/UartTxEmulator.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/UartTxEmulator.c",
+      "bytes": 3644,
+      "sha256": "d23621c4650732c5b6cd2fca4160b64f4abbadcd897dfc0a95b3d49774001e3b",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/EmbUtils/UartTxEmulator.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/EmbUtils/UartTxEmulator.h",
+      "bytes": 3159,
+      "sha256": "46b6fe470aa766a3776cf85f0739a925fa0a27da32707f965527d3c700d2cc6c",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/IDDVersion.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/IDDVersion.h",
+      "bytes": 1912,
+      "sha256": "70466eaac47cd6d9e30652cef2ec646f241044dba356d51c7d28d682beb27b23",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/Images/icm20948_img.dmp3a.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/Images/icm20948_img.dmp3a.h",
+      "bytes": 92289,
+      "sha256": "9c456ced751cef8431175513cf9411cf1b5834e8b59b4dfde3252c79dae66279",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/InvBool.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/InvBool.h",
+      "bytes": 1855,
+      "sha256": "3741539bea4488dd1a5a26df94e9c4dc6c99c302a7a172c8961ab78fb214f8c9",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/InvError.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/InvError.h",
+      "bytes": 3169,
+      "sha256": "e604eed3574c6b50921cb1eea1037b8b82f0113d80df93064e06968345cd0387",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/InvExport.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/InvExport.h",
+      "bytes": 1904,
+      "sha256": "6a20fa8f572c223f11d64faaa1a62e66854f364151747f9675d9d4bdbc694f72",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensor.c",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensor.c",
+      "bytes": 10868,
+      "sha256": "4f454bb7dbd316ff798794e39887fb3688d694cdacb3a0c5e276a54cfd6267f0",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensor.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensor.h",
+      "bytes": 8913,
+      "sha256": "5ccf1d0fa96176b6d17d7ae331172728528a877e63d85a96a88450826ef8973e",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorConfig.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorConfig.h",
+      "bytes": 3786,
+      "sha256": "02e75e10a4f874a55716a0c5b266fdd1a453c1b92cce1e8b5e702caa028fd66e",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorData.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorData.h",
+      "bytes": 9404,
+      "sha256": "32bbda51b99555be9c1a2198f2b439a39f2f7b9f393168e9258aa649ed6d520b",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorEvent.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorEvent.h",
+      "bytes": 7479,
+      "sha256": "5e8192870b1220c22b941d3cc591eb256d9f4ea1b078f658851f8dd882093061",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorId.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorId.h",
+      "bytes": 4362,
+      "sha256": "cff6d9b0c9098b834be27fb0691845b4a2f42626820b630f88ba9e23ca41611f",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorListener.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorListener.h",
+      "bytes": 5366,
+      "sha256": "f2f24e3b7886b6727eba0f61e3aea81a3ef6ee20fd3ab35513f581c8b8d71a45",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorSmartListener.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorSmartListener.h",
+      "bytes": 6905,
+      "sha256": "de214e8ada8f2d9e79b0eddeb1dd2f0d1a9982d44b0ea3b723c33ac9434bc370",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorType.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorType.h",
+      "bytes": 6705,
+      "sha256": "3986d2f62c1189d064ac8f4bb18dedabafd3bf5190b71f2b6a3d707c1200280e",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/Invn/VSensor/VSensorVersion.h",
+      "destination": "Logistic15U-PuppyBot6/src/Invn/VSensor/VSensorVersion.h",
+      "bytes": 1899,
+      "sha256": "56eb5c3d978855dcbf23fcf25cc682dd5180acc5ec87fc6df6239dd01aabcff8",
+      "reason": "Original IMU SDK dependency; preserve complete source and license notices"
+    },
+    {
+      "source": "include/pins_arduino.h",
+      "destination": "reference/board/pins_arduino.h",
+      "bytes": 2627,
+      "sha256": "cba8ea0dee228d058ece3aede1bcadaa738a887b8f3a481c36098668edcc3a57",
+      "reason": "Board variant reference only; not a library header"
+    },
+    {
+      "source": "config.js",
+      "destination": "reference/board/config.js",
+      "bytes": 636,
+      "sha256": "91dddad2a2f350ab4bb53c50613b291f6a9e4b46822766bef333b4b97386fc10",
+      "reason": "Original board identity and FQBN reference"
+    },
+    {
+      "source": "context.json",
+      "destination": "reference/board/context.json",
+      "bytes": 807,
+      "sha256": "1a41f7e1c844806b9d58f386622d497b93398002ea8165c4f6baf0a61b7c3799",
+      "reason": "Original MCU and build settings reference"
+    },
+    {
+      "source": "include/lib/main.ino",
+      "destination": "reference/original-main/main/main.ino",
+      "bytes": 1186,
+      "sha256": "fb948982fd93592d55f36f3076112d6451f02db47fee729cbf0f9f28f30fb4ee",
+      "reason": "Original two-core initialization reference; not a runnable example for this robot"
+    }
+  ]
+}

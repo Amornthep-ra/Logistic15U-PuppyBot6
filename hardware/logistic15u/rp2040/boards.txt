@@ -1,0 +1,60 @@
+# Derived from arduino-pico 6.2.0 Generic RP2350 configuration.
+# Fixed RP2350B / ARM / 150 MHz / 4 MB flash, from PuppyBot6-New context.json.
+logistic15u.name=Logistic15U-PuppyBot6
+logistic15u.build.usbvid=-DUSBD_VID=0x2e8a
+logistic15u.build.usbpid=-DUSBD_PID=0x000a
+logistic15u.build.usbpwr=-DUSBD_MAX_POWER_MA=250
+logistic15u.build.board=LOGISTIC15U_PUPPYBOT6
+logistic15u.build.variant=rp2040:generic_rp2350
+logistic15u.upload.maximum_size=4186112
+logistic15u.upload.wait_for_upload_port=true
+logistic15u.upload.erase_cmd=
+logistic15u.serial.disableDTR=false
+logistic15u.serial.disableRTS=false
+logistic15u.build.f_cpu=150000000L
+logistic15u.build.led=
+logistic15u.build.core=rp2040:rp2040
+logistic15u.build.ldscript=memmap_default.ld
+logistic15u.build.boot2=none
+logistic15u.build.usb_manufacturer="PrinceBot"
+logistic15u.build.usb_product="Logistic15U-PuppyBot6"
+logistic15u.build.flash_total=4194304
+logistic15u.build.flash_length=4186112
+logistic15u.build.eeprom_start=272621568
+logistic15u.build.fs_start=272621568
+logistic15u.build.fs_end=272621568
+logistic15u.build.chip=rp2350
+logistic15u.build.toolchain=arm-none-eabi
+logistic15u.build.toolchainpkg=pqt-gcc
+logistic15u.build.toolchainopts=-mcpu=cortex-m33 -mthumb -march=armv8-m.main+fp+dsp -mfloat-abi=softfp -mcmse
+logistic15u.build.uf2family=--family rp2350-arm-s --abs-block
+logistic15u.build.mcu=cortex-m33
+logistic15u.build.variantdefines=-D__PICO_RP2350A=0 -DICM_20948_USE_DMP
+# SparkFun 1.3.2 DMP C source uses memcpy_P without including string.h.
+# Include the standard declaration for Arduino-Pico 6.2.0's C23 compiler.
+logistic15u.compiler.c.extra_flags=-include string.h
+logistic15u.build.psram_cs=
+logistic15u.build.psram_length=0x000000
+logistic15u.build.psram_freq=-DRP2350_PSRAM_MAX_SCK_HZ=104000000
+logistic15u.build.flags.optimize=-Os
+logistic15u.build.os=
+logistic15u.build.flags.profile=
+logistic15u.build.flags.rtti=-fno-rtti
+logistic15u.build.flags.stackprotect=
+logistic15u.build.flags.exceptions=-fno-exceptions
+logistic15u.build.flags.libstdcpp=-lstdc++
+logistic15u.build.debug_port=
+logistic15u.build.debug_level=
+logistic15u.build.usbstack_flags=
+logistic15u.build.libpicow=liblwip.a
+logistic15u.build.libpicowdefs=-DLWIP_IPV6=0 -DLWIP_IPV4=1
+logistic15u.build.ram_length=512k
+logistic15u.build.debugscript=picoprobe_cmsis_dap.tcl
+logistic15u.upload.maximum_data_size=524288
+logistic15u.upload.tool=rp2040:uf2conv
+logistic15u.upload.tool.default=rp2040:uf2conv
+logistic15u.upload.tool.network=rp2040:uf2conv-network
+logistic15u.vid.0=0x2e8a
+logistic15u.pid.0=0x000a
+logistic15u.upload_port.0.vid=0x2e8a
+logistic15u.upload_port.0.pid=0x000a

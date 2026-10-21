@@ -1,0 +1,72 @@
+{
+  "version": "0.1.0",
+  "base_core": "rp2040:rp2040@6.2.0",
+  "library": {
+    "archiveFileName": "Logistic15U-PuppyBot6-0.1.0.zip",
+    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.1.0.zip",
+    "checksum": "SHA-256:1872003287dae3f4f12e20e6727978430ba81923ad1f1c40043e051e3b412ebb",
+    "size": "21223",
+    "files": [
+      {
+        "path": "Logistic15U-PuppyBot6/examples/OriginalMain/OriginalMain.ino",
+        "sha256": "bb16e53ce93b7d22e13bc90ac04083cf6e85af95d18ad784713ae3f0246345d2"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/library.properties",
+        "sha256": "df0d0a18c355dddd01c998940a76c90715526664b163ca8de3b9b630b6328cfa"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/NOTICE.md",
+        "sha256": "392f7e7b25bcbd03b254a476e517f20ae49c639848af495fb6e9ad7928da6380"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/KB_PIDFollowHelpers.h",
+        "sha256": "a4e505de760e5200204a8a2a39f7be7eb5935b12742e5c57b1afb287b4c357ee"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/Logistic15U_PuppyBot6.h",
+        "sha256": "52424126eb06f6de8c39fe73e7e0e47dad4cb2cc4d435521f72c42d1efa83f39"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/puppybot.h",
+        "sha256": "4a4dd38b6766dadd3795c418ed6607a0c180c2767209216f6889c56621a40601"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotIMU.h",
+        "sha256": "99e76c608ebd095d256c439c5775bda64c4caf87ac467e6099a3469f6123a68c"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotImuDevice.h",
+        "sha256": "98bbd05563e8d51bb1ec5b7d75482862545abf6010ead038349573f72b2bc0e6"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotTurnPID.h",
+        "sha256": "b240a53785667f64716512bc4c66e5cd16a44b67cb498f10d02af22a1ed0e866"
+      }
+    ]
+  },
+  "board": {
+    "archiveFileName": "logistic15u-rp2040-0.1.0.zip",
+    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.1.0.zip",
+    "checksum": "SHA-256:f65db16b352b1aa291c5afa14e0b803bc46f6963a3a9685a1d5a686318ab33cb",
+    "size": "11597",
+    "files": [
+      {
+        "path": "logistic15u-rp2040-0.1.0/boards.txt",
+        "sha256": "26930f3ad7464360587b480efe36c2bca1bfbd0ea87947bedac75ce84f8d75a7"
+      },
+      {
+        "path": "logistic15u-rp2040-0.1.0/LICENSE.arduino-pico",
+        "sha256": "20c17d8b8c48a600800dfd14f95d5cb9ff47066a9641ddeab48dc54aec96e331"
+      },
+      {
+        "path": "logistic15u-rp2040-0.1.0/platform.txt",
+        "sha256": "35e7a0a0f285888615d2b56d45cab3900b15089bb3fa7cd80756d554aedaefe0"
+      },
+      {
+        "path": "logistic15u-rp2040-0.1.0/README.md",
+        "sha256": "99f2c9bc9e4d08d95fd0bd16629d5a13f5d9bfb217fc032703162e1723a4c12d"
+      }
+    ]
+  }
+}
