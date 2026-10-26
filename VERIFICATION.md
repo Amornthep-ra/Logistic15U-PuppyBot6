@@ -34,7 +34,7 @@ Local logs (excluded from public bundle):
 - `.arduino-test/compile-original.log`
 - `.arduino-test/compile-ide-clean.log` (final package in the real IDE sketchbook)
 
-Dependencies and exact versions: `DEPENDENCIES.json` and `library.properties`.
+Dependencies and exact versions: `library.properties`.
 The local IDE sketchbook also contains two legacy ST7735 1.0.8 copies. The port now
 resolves ST7789 first to select the combined 1.11.0 library; existing libraries
 were preserved. A clean rebuild is needed if an earlier build cached the old choice.

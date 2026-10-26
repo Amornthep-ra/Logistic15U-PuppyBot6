@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 
 *.ino.d
+dist/*-repository-*.zip

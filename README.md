@@ -17,10 +17,10 @@ FQBN: `logistic15u:rp2040:logistic15u`
 - **หน้าสถานะ IMU ตอนเปิดเครื่อง:** `waitIMUCalibration()` บน core 0 และ `initIMU(USE_IMU)` บน core 1 พร้อม timeout และ SW1 ข้าม — [IMU_STARTUP.md](Logistic15U-PuppyBot6/IMU_STARTUP.md), [ผลตรวจ](IMU_STARTUP_VERIFICATION.md)
 - **เมนู `wait_SW1()`:** Start / ADC / Mux 8 Front/Back / IMU + Encoder / Calibrate RGB / Calibrate Line (BOOT = ถัดไป, SW1 = เลือก) — [ผลตรวจ](WAIT_SW1_VERIFICATION.md)
 - **Encoder สองตัว:** เริ่มและรีเซ็ตแยกตัว — [EncoderDual](Logistic15U-PuppyBot6/examples/EncoderDual/README.md), [ผลตรวจ](ENCODER_VERIFICATION.md)
-- **Calibrate Line:** วัดพื้น/เส้นแยก Front/Back บันทึก Flash โหลดอัตโนมัติ — [LINE_CALIBRATION.md](Logistic15U-PuppyBot6/LINE_CALIBRATION.md), [ผลตรวจ](LINE_CALIBRATION_VERIFICATION.md)
-- **ตามเส้น PD:** ตัวกรอง D และเพดานแรงเลี้ยวร่วมกัน (`setLinePDOptions`), หน้าดูค่า PD บน TFT — [LINE_PD_MONITOR.md](Logistic15U-PuppyBot6/LINE_PD_MONITOR.md), [ผลตรวจ](LINE_PD_MONITOR_VERIFICATION.md)
+- **Calibrate Line:** วัดพื้น/เส้นแยก Front/Back บันทึก Flash โหลดอัตโนมัติ — [LINE_CALIBRATION.md](Logistic15U-PuppyBot6/LINE_CALIBRATION.md)
+- **ตามเส้น PD:** ตัวกรอง D และเพดานแรงเลี้ยวร่วมกัน (`setLinePDOptions`), หน้าดูค่า PD บน TFT — [LINE_PD_MONITOR.md](Logistic15U-PuppyBot6/LINE_PD_MONITOR.md)
 - **PI ความเร็วล้อ:** `Run_PID_Encoder` / `Run_PID_B_Encoder` และวิ่งตามพัลส์ `Run_PID_Pulses` / `Run_PID_B_Pulses` พร้อมตัวอย่าง WheelSpeedMeasure — [WHEEL_SPEED_CONTROL.md](Logistic15U-PuppyBot6/WHEEL_SPEED_CONTROL.md), [ผลตรวจ](WHEEL_SPEED_VERIFICATION.md)
-- **RGB0/RGB1:** อ่านสองตัว, สอบเทียบ 6 สีบน TFT บันทึก Flash v2, แยกสี (`getRGBColor`, `classifyRGB`), โหมด `beginRGBMode()` — [RGBMonitor](Logistic15U-PuppyBot6/examples/RGBMonitor/README.md), [RGBCalibration](Logistic15U-PuppyBot6/examples/RGBCalibration/README.md), [RGBClassify](Logistic15U-PuppyBot6/examples/RGBClassify/README.md), [ผลตรวจ](RGB_CALIBRATION_VERIFICATION.md)
+- **RGB0/RGB1:** อ่านสองตัว, สอบเทียบ 6 สีบน TFT บันทึก Flash v2, แยกสี (`getRGBColor`, `classifyRGB`), โหมด `beginRGBMode()` — [RGBMonitor](Logistic15U-PuppyBot6/examples/RGBMonitor/README.md), [RGBCalibration](Logistic15U-PuppyBot6/examples/RGBCalibration/README.md), [RGBClassify](Logistic15U-PuppyBot6/examples/RGBClassify/README.md)
 - **Servo:** แก้ clock PWM เป็น 50 Hz, `servoStop(channel)`, `setServoPulseRange()` — [SERVO_API.md](Logistic15U-PuppyBot6/SERVO_API.md), [ผลตรวจ](SERVO_VERIFICATION.md)
 - แก้การถอดค่า RGB ที่ชื่อ `word()` ชน macro ของ Arduino จนแสดง R=2, G=4, B=6, Clear=0 — [RGB_WORD_FIX_VERIFICATION.md](RGB_WORD_FIX_VERIFICATION.md)
 
@@ -89,7 +89,6 @@ Wire, SPI, Pico SDK และ toolchain มาจาก Arduino-Pico ไม่�
 - `scripts/verify_distribution.py`: ตรวจ ZIP, checksum และ index กับซอร์ส
 - `VERIFICATION.md` และ `*_VERIFICATION.md`: ผลการติดตั้ง คอมไพล์ และทดสอบซอฟต์แวร์แต่ละส่วน
 - `reference/original-main/main/main.ino`: ตัวอย่างเดิมที่ไม่แก้ไข
-- `COPY_MANIFEST.json`: หลักฐานขั้นคัดลอกเดิม ไม่ใช่ manifest ปัจจุบัน
 
 ไม่ได้แจกจ่าย InvenSense SDK `Invn` เดิม ใช้ SparkFun จาก Library Manager แทน
 dependency มาตรฐานและ build cache ไม่อยู่ใน ZIP ดูที่มาใน [NOTICE.md](Logistic15U-PuppyBot6/NOTICE.md)

@@ -16,7 +16,7 @@ The original API is implemented in headers with global state. Include it only in
 
 `main` is a compatibility example. `puppybot_setup()` initializes servo outputs, and core 1 initializes IMU and color hardware. Compilation does not confirm wiring, servo endpoints, encoder pulses, physical flash or runtime orientation. No firmware was uploaded during verification.
 
-`COPY_MANIFEST.json` records the historical copy stage. Some listed files moved to local-only `reference/legacy-imu`, and `PuppyBotIMU.h` was ported. Use `dist/manifest.json` for current distributed hashes.
+Some files from the original copy stage moved to local-only `reference/legacy-imu`, and `PuppyBotIMU.h` was ported. Use `dist/manifest.json` for current distributed hashes.
 
 ## References
 

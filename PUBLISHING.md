@@ -14,11 +14,12 @@ Repository เป้าหมาย: https://github.com/Amornthep-ra/Logistic15U
 | `dist/Logistic15U-PuppyBot6-0.2.0.zip` | `python scripts/build_release.py` |
 | `dist/logistic15u-rp2040-0.2.0.zip` | `python scripts/build_release.py` |
 | `package_logistic15u_index.json`, `dist/manifest.json` | `python scripts/build_release.py` |
-| `dist/Logistic15U-PuppyBot6-repository-0.2.0.zip` | `python scripts/build_source_bundle.py` (รันหลัง build_release) |
 
 ตรวจด้วย `python scripts/verify_distribution.py` ก่อนอัปโหลด
 
-Package index ยังเก็บรายการแพลตฟอร์ม 0.1.0 ไว้ต่อจาก 0.2.0 จึง**ห้ามลบ** `dist/*-0.1.0.zip` ออกจาก repository เพราะ URL ใน index ยังชี้ไปที่ไฟล์นั้น
+`python scripts/build_source_bundle.py` สร้าง `dist/Logistic15U-PuppyBot6-repository-<version>.zip` สำหรับอัปโหลดด้วยมือเท่านั้น ไฟล์นี้ซ้ำกับซอร์สใน repo จึงไม่ commit (`.gitignore` กันไว้)
+
+Package index ยังเก็บรายการแพลตฟอร์ม 0.1.0 ไว้ต่อจาก 0.2.0 จึง**ห้ามลบ** `dist/Logistic15U-PuppyBot6-0.1.0.zip` และ `dist/logistic15u-rp2040-0.1.0.zip` ออกจาก repository เพราะ URL ใน index ยังชี้ไปที่ไฟล์นั้น
 
 ## ขั้นตอนเผยแพร่
 
