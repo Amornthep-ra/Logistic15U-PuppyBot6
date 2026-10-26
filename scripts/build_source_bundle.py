@@ -3,13 +3,14 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.2.0'
-# 0.1.0 archives stay published because the package index still lists that platform.
+VERSION = '0.2.1'
+# Earlier archives stay published because the package index still lists those platforms.
 files = [ROOT / name for name in (
     '.gitignore', '.gitattributes', 'LICENSE',
     'BOARD_PROFILE.json',
     'package_logistic15u_index.json', 'dist/manifest.json',
     'dist/Logistic15U-PuppyBot6-0.1.0.zip', 'dist/logistic15u-rp2040-0.1.0.zip',
+    'dist/Logistic15U-PuppyBot6-0.2.0.zip', 'dist/logistic15u-rp2040-0.2.0.zip',
     f'dist/Logistic15U-PuppyBot6-{VERSION}.zip', f'dist/logistic15u-rp2040-{VERSION}.zip',
     'reference/board/context.json', 'reference/original-main/main/main.ino'
 )]

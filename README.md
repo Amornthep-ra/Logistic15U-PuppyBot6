@@ -1,6 +1,6 @@
 # Logistic15U-PuppyBot6
 
-Arduino library และแพ็กเกจบอร์ดรุ่น **0.2.0** ใช้ชื่อบอร์ด **Logistic15U-PuppyBot6**
+Arduino library และแพ็กเกจบอร์ดรุ่น **0.2.1** ใช้ชื่อบอร์ด **Logistic15U-PuppyBot6**
 พร้อม `main/main.ino` สำหรับตรวจความเข้ากันได้ ไม่มีโปรแกรมภารกิจ
 
 บอร์ดใช้ Arduino-Pico 6.2.0 อ้าง RP2350B / ARM / 150 MHz / Flash 4 MB จาก
@@ -8,6 +8,10 @@ Arduino library และแพ็กเกจบอร์ดรุ่น **0.2.
 FQBN: `logistic15u:rp2040:logistic15u`
 
 วิธีใช้ API แต่ละกลุ่มและตัวอย่างอยู่ใน [README ของ Library](Logistic15U-PuppyBot6/README.md)
+
+## มีอะไรใหม่ใน 0.2.1
+
+- เพิ่มตัวอย่าง **RobotStarter** (File → Examples → Logistic15U-PuppyBot6 → RobotStarter): โค้ดตั้งต้นของหุ่นทั้งตัว พร้อม `RobotSetup.h`, `RobotActions.h` และ README อธิบาย IMU / Encoder / PID / RGB / Servo — [README](Logistic15U-PuppyBot6/examples/RobotStarter/README.md)
 
 ## มีอะไรใหม่ใน 0.2.0
 
@@ -35,8 +39,8 @@ FQBN: `logistic15u:rp2040:logistic15u`
    https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/package_logistic15u_index.json
    ```
 
-2. ใน Boards Manager ติดตั้ง **Raspberry Pi Pico/RP2040/RP2350 by Earle F. Philhower, III** รุ่น **6.2.0** ก่อน แล้วติดตั้ง **Logistic15U-PuppyBot6** รุ่น **0.2.0** แพ็กเกจนี้อ้าง core และเครื่องมือของ Arduino-Pico จึงไม่คัดลอกไฟล์ซ้ำ
-3. ดาวน์โหลด [Library ZIP](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.0.zip) แล้วเลือก Sketch → Include Library → Add .ZIP Library หรือใช้ไฟล์ `dist/Logistic15U-PuppyBot6-0.2.0.zip` ใน repository ถ้าเคยติดตั้ง 0.1.0 ให้ลบโฟลเดอร์ Lib เดิมใน `Documents/Arduino/libraries` ก่อน
+2. ใน Boards Manager ติดตั้ง **Raspberry Pi Pico/RP2040/RP2350 by Earle F. Philhower, III** รุ่น **6.2.0** ก่อน แล้วติดตั้ง **Logistic15U-PuppyBot6** รุ่น **0.2.1** แพ็กเกจนี้อ้าง core และเครื่องมือของ Arduino-Pico จึงไม่คัดลอกไฟล์ซ้ำ
+3. ดาวน์โหลด [Library ZIP](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.1.zip) แล้วเลือก Sketch → Include Library → Add .ZIP Library หรือใช้ไฟล์ `dist/Logistic15U-PuppyBot6-0.2.1.zip` ใน repository ถ้าเคยติดตั้ง 0.1.0 ให้ลบโฟลเดอร์ Lib เดิมใน `Documents/Arduino/libraries` ก่อน
 4. ติดตั้ง dependency ด้านล่างผ่าน Library Manager ตามรุ่นที่ระบุ การเพิ่ม ZIP ไม่ได้ติดตั้ง dependency ให้อัตโนมัติ หาก Manager เลือกรุ่นใหม่ให้ ให้เปลี่ยนกลับเป็นรุ่นในตารางก่อน Verify
 5. เลือกบอร์ด **Logistic15U-PuppyBot6** เปิด `main/main.ino` แล้วกด Verify หรือเปิด File → Examples → Logistic15U-PuppyBot6 → OriginalMain
 

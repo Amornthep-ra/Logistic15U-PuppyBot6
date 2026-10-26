@@ -5,7 +5,7 @@ import json
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 BASE = "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main"
 
 

@@ -6,20 +6,21 @@ Repository เป้าหมาย: https://github.com/Amornthep-ra/Logistic15U
 
 - **0.1.0:** เผยแพร่บน `main` แล้ว (commit `04f744b`) ผลตรวจ URL อยู่ใน `PUBLIC_URL_VERIFICATION.md`
 - **0.2.0:** เผยแพร่บน `main` แล้ว (commit `4769eba`) ทดสอบติดตั้งจาก URL สาธารณะผ่าน ผลอยู่ใน `PUBLIC_URL_VERIFICATION.md`
+- **0.2.1:** เพิ่มตัวอย่าง `RobotStarter` build ZIP, index และ manifest ในเครื่องแล้ว **ยังไม่ได้ push**
 
-## ไฟล์ของ 0.2.0
+## ไฟล์ของ 0.2.1
 
 | ไฟล์ | สร้างด้วย |
 | --- | --- |
-| `dist/Logistic15U-PuppyBot6-0.2.0.zip` | `python scripts/build_release.py` |
-| `dist/logistic15u-rp2040-0.2.0.zip` | `python scripts/build_release.py` |
+| `dist/Logistic15U-PuppyBot6-0.2.1.zip` | `python scripts/build_release.py` |
+| `dist/logistic15u-rp2040-0.2.1.zip` | `python scripts/build_release.py` |
 | `package_logistic15u_index.json`, `dist/manifest.json` | `python scripts/build_release.py` |
 
 ตรวจด้วย `python scripts/verify_distribution.py` ก่อนอัปโหลด
 
 `python scripts/build_source_bundle.py` สร้าง `dist/Logistic15U-PuppyBot6-repository-<version>.zip` สำหรับอัปโหลดด้วยมือเท่านั้น ไฟล์นี้ซ้ำกับซอร์สใน repo จึงไม่ commit (`.gitignore` กันไว้)
 
-Package index ยังเก็บรายการแพลตฟอร์ม 0.1.0 ไว้ต่อจาก 0.2.0 จึง**ห้ามลบ** `dist/Logistic15U-PuppyBot6-0.1.0.zip` และ `dist/logistic15u-rp2040-0.1.0.zip` ออกจาก repository เพราะ URL ใน index ยังชี้ไปที่ไฟล์นั้น
+Package index ยังเก็บรายการแพลตฟอร์ม 0.2.0 และ 0.1.0 ไว้ต่อจาก 0.2.1 จึง**ห้ามลบ** ZIP ของ 0.2.0 และ 0.1.0 ใน `dist/` ออกจาก repository เพราะ URL ใน index ยังชี้ไปที่ไฟล์นั้น
 
 ## ขั้นตอนเผยแพร่
 
@@ -27,10 +28,10 @@ Package index ยังเก็บรายการแพลตฟอร์ม
 2. push ไปที่ branch `main` ด้วยบัญชีที่มีสิทธิ์เขียน repository
 3. ตรวจว่าลิงก์เหล่านี้ดาวน์โหลดได้โดยไม่ต้องล็อกอิน และ SHA-256 ตรงกับ `dist/manifest.json`:
    - [Board Manager URL](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/package_logistic15u_index.json)
-   - [Library ZIP URL](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.0.zip)
-   - [Board ZIP URL](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.2.0.zip)
+   - [Library ZIP URL](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.1.zip)
+   - [Board ZIP URL](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.2.1.zip)
 4. ทดสอบ `scripts/install.ps1 -ConfigFile <config แยก>` กับ sketchbook ทดสอบ แล้วบันทึกผลใน `PUBLIC_URL_VERIFICATION.md`
-5. (แนะนำ) สร้าง tag `v0.2.0` และ GitHub Release แนบ ZIP ทั้งสองไฟล์
+5. (แนะนำ) สร้าง tag `v0.2.1` และ GitHub Release แนบ ZIP ทั้งสองไฟล์
 
 การแจก library ด้วย ZIP ใช้ได้ทันทีหลังเผยแพร่ แต่ยังไม่ได้ยื่นลงทะเบียน
 Arduino Library Manager กลาง การเพิ่ม Board Manager URL ไม่ได้ติดตั้ง library ให้อัตโนมัติ

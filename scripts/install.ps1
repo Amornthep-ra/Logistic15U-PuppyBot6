@@ -15,7 +15,7 @@ function Invoke-Arduino {
 $urls = "$baseIndex,$PackageIndexUrl"
 Invoke-Arduino core update-index --additional-urls $urls
 Invoke-Arduino core install 'rp2040:rp2040@6.2.0' --additional-urls $urls
-Invoke-Arduino core install 'logistic15u:rp2040@0.2.0' --additional-urls $urls
+Invoke-Arduino core install 'logistic15u:rp2040@0.2.1' --additional-urls $urls
 Invoke-Arduino lib update-index
 $dependencies = @(
     'Adafruit GFX Library@1.12.6',
@@ -31,7 +31,7 @@ Invoke-Arduino lib install --no-deps @dependencies
 $previousUnsafeInstall = $env:ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL
 try {
     $env:ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL = 'true'
-    Invoke-Arduino lib install --zip-path (Join-Path $projectRoot 'dist\Logistic15U-PuppyBot6-0.2.0.zip')
+    Invoke-Arduino lib install --zip-path (Join-Path $projectRoot 'dist\Logistic15U-PuppyBot6-0.2.1.zip')
 } finally {
     $env:ARDUINO_LIBRARY_ENABLE_UNSAFE_INSTALL = $previousUnsafeInstall
 }

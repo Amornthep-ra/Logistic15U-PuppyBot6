@@ -1,11 +1,11 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "base_core": "rp2040:rp2040@6.2.0",
   "library": {
-    "archiveFileName": "Logistic15U-PuppyBot6-0.2.0.zip",
-    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.0.zip",
-    "checksum": "SHA-256:97038388e6f08688e35449664fa5aaf4b9112737cb615b997b3eeec8b8d08c16",
-    "size": "105490",
+    "archiveFileName": "Logistic15U-PuppyBot6-0.2.1.zip",
+    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.1.zip",
+    "checksum": "SHA-256:e5fe29fe3daeac4bd684dd80e4c67c47dc8233a8a84bdf2dc28f14dbf5dd5be9",
+    "size": "124085",
     "files": [
       {
         "path": "Logistic15U-PuppyBot6/DRIVE_2WD.md",
@@ -52,6 +52,22 @@
         "sha256": "20aab687de3c398e2efb890a0313a80808189622d235fb5a8e0891a6f050d28c"
       },
       {
+        "path": "Logistic15U-PuppyBot6/examples/RobotStarter/README.md",
+        "sha256": "533dd1e685b73479c504ae348164727bc6aacac4474b7db4feced3881fb1c601"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RobotStarter/RobotActions.h",
+        "sha256": "9ae200bbb9838f8883e7e21ab8706877d86f01c40ea03dc2357e871d21a6a6d7"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RobotStarter/RobotSetup.h",
+        "sha256": "a30e3f0c38586743075bb192044b4de8d8c6fa424423b4a97de21213da316ad6"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RobotStarter/RobotStarter.ino",
+        "sha256": "7040e92bfec7d6fa18f92245350c719d1f8347bbf000ce73e56fef82f090ad04"
+      },
+      {
         "path": "Logistic15U-PuppyBot6/examples/WheelSpeedMeasure/WheelSpeedMeasure.ino",
         "sha256": "371c3591b544249def1687b0aa804bf7e74a1b676dd9997500c27997dd2b187c"
       },
@@ -61,7 +77,7 @@
       },
       {
         "path": "Logistic15U-PuppyBot6/library.properties",
-        "sha256": "b4feae7af8a1145c5929adb5e2ac84268117e9de5c65b51f381c6c0cc33c3133"
+        "sha256": "8adcf0a854a3705c18c1c81edb153763e4a845950e59e8e137d223168dceda37"
       },
       {
         "path": "Logistic15U-PuppyBot6/LICENSE",
@@ -81,7 +97,7 @@
       },
       {
         "path": "Logistic15U-PuppyBot6/README.md",
-        "sha256": "d7f08ba138322062a57ad1b60bcbb078ec3eb5ce7a339c8950024162c0981aca"
+        "sha256": "98825eaa9d7bc567c23405b1410b722786c679cb210af36b6c8b91f01a799cdb"
       },
       {
         "path": "Logistic15U-PuppyBot6/SERVO_API.md",
@@ -218,26 +234,26 @@
     ]
   },
   "board": {
-    "archiveFileName": "logistic15u-rp2040-0.2.0.zip",
-    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.2.0.zip",
-    "checksum": "SHA-256:3078daadb08ec0f71d7ef3570e6128877d50d185bcb46641b7659a6d73ac5d62",
-    "size": "11593",
+    "archiveFileName": "logistic15u-rp2040-0.2.1.zip",
+    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.2.1.zip",
+    "checksum": "SHA-256:77a0f54698a11a121373306d7fdc2c9cacd31378e80fc471fbca14f98a22713c",
+    "size": "11594",
     "files": [
       {
-        "path": "logistic15u-rp2040-0.2.0/boards.txt",
+        "path": "logistic15u-rp2040-0.2.1/boards.txt",
         "sha256": "26930f3ad7464360587b480efe36c2bca1bfbd0ea87947bedac75ce84f8d75a7"
       },
       {
-        "path": "logistic15u-rp2040-0.2.0/LICENSE.arduino-pico",
+        "path": "logistic15u-rp2040-0.2.1/LICENSE.arduino-pico",
         "sha256": "20c17d8b8c48a600800dfd14f95d5cb9ff47066a9641ddeab48dc54aec96e331"
       },
       {
-        "path": "logistic15u-rp2040-0.2.0/platform.txt",
-        "sha256": "d42c92c7e2c3985a92ddbc07b2127a87b38326e3de66f5555779f85d6965ccb0"
+        "path": "logistic15u-rp2040-0.2.1/platform.txt",
+        "sha256": "9e9cf844a404b7a615f261e6edcc56c8b5d1d02505543ec9a699d118562d6f0b"
       },
       {
-        "path": "logistic15u-rp2040-0.2.0/README.md",
-        "sha256": "0476ab951bd5959cc7dc1fac9e952816cbbb08d23298832d54cba68785ffb5f1"
+        "path": "logistic15u-rp2040-0.2.1/README.md",
+        "sha256": "9c99d3d49344ea607f6a14d29ed430c9277752d39187983ef561ad1c935d50e9"
       }
     ]
   }

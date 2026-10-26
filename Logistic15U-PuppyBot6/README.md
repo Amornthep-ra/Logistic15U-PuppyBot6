@@ -2,7 +2,7 @@
 
 Arduino library สำหรับบอร์ด Logistic15U-PuppyBot6 (RP2350B) รวม API มอเตอร์ 2WD, Servo, จอ TFT, เซนเซอร์เส้น, RGB, Encoder และ IMU ดัดแปลงจาก PuppyBot6-New ไม่มีโปรแกรมภารกิจแข่งขันในตัว
 
-- รุ่น: `0.2.0`
+- รุ่น: `0.2.1`
 - Header: `#include <Logistic15U_PuppyBot6.h>`
 - บอร์ด: `Logistic15U-PuppyBot6` (FQBN `logistic15u:rp2040:logistic15u`) บน Arduino-Pico `6.2.0`
 - Repository: https://github.com/Amornthep-ra/Logistic15U-PuppyBot6
@@ -16,8 +16,8 @@ Arduino library สำหรับบอร์ด Logistic15U-PuppyBot6 (RP2350B
    https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/package_logistic15u_index.json
    ```
 
-2. Boards Manager: ติดตั้ง **Raspberry Pi Pico/RP2040/RP2350 by Earle F. Philhower, III** รุ่น **6.2.0** แล้วติดตั้ง **Logistic15U-PuppyBot6** รุ่น **0.2.0**
-3. ดาวน์โหลด [Library ZIP](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.0.zip) แล้วเลือก Sketch → Include Library → Add .ZIP Library
+2. Boards Manager: ติดตั้ง **Raspberry Pi Pico/RP2040/RP2350 by Earle F. Philhower, III** รุ่น **6.2.0** แล้วติดตั้ง **Logistic15U-PuppyBot6** รุ่น **0.2.1**
+3. ดาวน์โหลด [Library ZIP](https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.1.zip) แล้วเลือก Sketch → Include Library → Add .ZIP Library
 4. ติดตั้ง dependency ผ่าน Library Manager ตามรุ่นในตาราง (ZIP ไม่ได้ติดตั้งให้อัตโนมัติ)
 
 | Library Manager name | รุ่นที่ทดสอบ |
@@ -99,6 +99,7 @@ File → Examples → Logistic15U-PuppyBot6
 
 | ตัวอย่าง | ใช้ทำอะไร |
 | --- | --- |
+| `RobotStarter` | โค้ดตั้งต้นของหุ่นทั้งตัว: สอง core, เมนู, IMU, Encoder + PI ล้อ, ตามเส้นจนเจอแยก, Servo ยกลิฟ พร้อม README อธิบายทุกส่วน |
 | `OriginalMain` | โครงเดิมจาก PuppyBot6-New สำหรับตรวจว่าคอมไพล์ผ่าน |
 | `EncoderDual` | อ่าน Encoder 1/2 ผ่าน Serial และรีเซ็ตแยกตัว |
 | `WheelSpeedMeasure` | วัดเครื่องหมายพัลส์และ ticks/s ของแต่ละล้อ เพื่อกรอก `WheelSpeedSettings` |
