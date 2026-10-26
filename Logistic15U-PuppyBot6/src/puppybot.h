@@ -4,9 +4,12 @@
 #include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
 #include <Adafruit_ST7735.h> // Resolve the combined ST7735/ST7789 library first.
 #include <Adafruit_TCS34725.h>
+#include "PuppyBotRGBSettings.h"
 #include <SPI.h>
 #include <Wire.h>
 #include "hardware/pwm.h"
+#include "PuppyBotBuzzer.h"
+#include "PuppyBotLinePD.h"
 
 
 #define TFT_CS   (13)
@@ -17,8 +20,8 @@
 
 Adafruit_ST7735 tft_(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
-Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_2_4MS, TCS34725_GAIN_4X);
-Adafruit_TCS34725 tcsB = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_2_4MS,TCS34725_GAIN_4X);
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(PuppyBotRGBSettings::integration, PuppyBotRGBSettings::gain);
+Adafruit_TCS34725 tcsB = Adafruit_TCS34725(PuppyBotRGBSettings::integration, PuppyBotRGBSettings::gain);
 
 int TCS_R,TCS_G,TCS_B,TCS_T,TCS_L = 0;
 
@@ -86,7 +89,6 @@ bool first_state_for_calribrate_B = 0;
 
 int _Sensitive_F = 80;
 int _Sensitive_B = 80;
-int current_degree_servo  = 90;
 
 // Legacy v1 pitch/roll globals (used by template.c loop1).
 // If not needed, remove these two variables and the loop1 updates.
@@ -104,43 +106,21 @@ unsigned long loop_timer;
 int Sensor_mode_F = 0;
 int Sensor_mode_B = 0;
 
-int servoPins[SERVO_COUNT] = {34, 35, 36, 37, 38, 39};
 // int swpin = 3;
 int swpin = 27;
 
-uint16_t angleToLevel(int angle) {
-  int pulse = map(angle, 0, 180, 300, 3000); // 1000–2000 µs
-  return pulse;
-}
-
-// ฟังก์ชัน setup สำหรับ Servo ทุกตัว
-void setupServos() {
-  for (int i = 0; i < SERVO_COUNT; i++) {
-    gpio_set_function(servoPins[i], GPIO_FUNC_PWM);
-    uint slice = pwm_gpio_to_slice_num(servoPins[i]);
-    pwm_set_wrap(slice, 20000);          // 20 ms period
-    pwm_set_clkdiv(slice, 125.0f);       // 1 µs per tick
-    pwm_set_enabled(slice, true);
-  }
-}
-
-// ฟังก์ชันสั่งมุม: servoRun(ช่องมอเตอร์ 0-5, มุม 0-180)
-void servoRun(int channel, int angle) {
-  if (channel < 0 || channel >= SERVO_COUNT) return; // ป้องกัน index ผิด
-  int pin = servoPins[channel];
-  pwm_set_gpio_level(pin, angleToLevel(angle));
-}
+#include "PuppyBotServos.h"
 
 void softTone(int frequency, int duration) {
   long period = 1000000L / frequency; // คาบเวลา (microseconds)
   long cycles = (long)frequency * duration / 1000; // จำนวนรอบที่ต้องทำ
   
-  pinMode(2, OUTPUT);
+  pinMode(PUPPYBOT_BUZZER_PIN, OUTPUT);
   
   for (long i = 0; i < cycles; i++) {
-    digitalWrite(2, HIGH);
+    digitalWrite(PUPPYBOT_BUZZER_PIN, HIGH);
     delayMicroseconds(period / 2);  // ครึ่งคาบ (HIGH)
-    digitalWrite(2, LOW);
+    digitalWrite(PUPPYBOT_BUZZER_PIN, LOW);
     delayMicroseconds(period / 2);  // ครึ่งคาบ (LOW)
   }
 }
@@ -213,21 +193,11 @@ int ADC(int analog_CH) {
     }  
   return val;
 }
-int ADC_F(int analog_CH) {
-   int val = 0;
-   if(Sensor_mode_F == 0){
-    if (analog_CH < 8 ) {
-      val = adc.readADC(analog_CH);
-    }
-    else if (analog_CH >= 8 ) {
-      val = analogRead(32+analog_CH);
-    }  
-   }
-   else if(Sensor_mode_F == 1){
+namespace PuppyBotAdcDetail {
+    inline int readMuxFront(int analog_CH, int numCh) {
         // S0=41 S1=42 S2=43 S3=44  Out=40  (CD74HC4067, up to 16ch)
         // reversed mapping: sensor 0 = highest MUX address
         static const int _selF[4] = {41, 42, 43, 44};
-        int numCh = (PID_NumPin >= 9) ? 16 : 8;
         int addr = constrain((numCh - 1) - analog_CH, 0, numCh - 1);
         int numBits = (numCh >= 9) ? 4 : 3;
         for(int _b = 0; _b < numBits; _b++){
@@ -236,7 +206,31 @@ int ADC_F(int analog_CH) {
           gpio_put(_selF[_b], (addr >> _b) & 1);
         }
         delayMicroseconds(200);
-        val = analogRead(40);
+        return analogRead(40);
+    }
+    inline int readMuxBack8(int analog_CH) {
+        // 8-channel MUX: S2=47 S1=46 S0=45  Out=44
+        static const int _muxB8[8][3] = {{1,1,1},{1,1,0},{1,0,1},{1,0,0},{0,1,1},{0,1,0},{0,0,1},{0,0,0}};
+        int ch = constrain(analog_CH, 0, 7);
+        gpio_init(45); gpio_set_dir(45, GPIO_OUT); gpio_put(45, _muxB8[ch][2]);
+        gpio_init(46); gpio_set_dir(46, GPIO_OUT); gpio_put(46, _muxB8[ch][1]);
+        gpio_init(47); gpio_set_dir(47, GPIO_OUT); gpio_put(47, _muxB8[ch][0]);
+        delayMicroseconds(200);
+        return analogRead(44);
+    }
+}
+int ADC_F(int analog_CH) {
+   int val = 0;
+   if(Sensor_mode_F == 0){
+    if (analog_CH < 8 ) {
+      val = adc.readADC(analog_CH);
+    }
+    else if (analog_CH >= 8 ) {
+      val = analogRead(32+analog_CH);
+    }
+   }
+   else if(Sensor_mode_F == 1){
+        val = PuppyBotAdcDetail::readMuxFront(analog_CH, (PID_NumPin >= 9) ? 16 : 8);
    }
   
 
@@ -253,14 +247,7 @@ int ADC_B(int analog_CH) {
     }  
    }
    else if(Sensor_mode_B == 1){
-        // 8-channel MUX: S2=47 S1=46 S0=45  Out=44
-        static const int _muxB8[8][3] = {{1,1,1},{1,1,0},{1,0,1},{1,0,0},{0,1,1},{0,1,0},{0,0,1},{0,0,0}};
-        int ch = constrain(analog_CH, 0, 7);
-        gpio_init(45); gpio_set_dir(45, GPIO_OUT); gpio_put(45, _muxB8[ch][2]);
-        gpio_init(46); gpio_set_dir(46, GPIO_OUT); gpio_put(46, _muxB8[ch][1]);
-        gpio_init(47); gpio_set_dir(47, GPIO_OUT); gpio_put(47, _muxB8[ch][0]);
-        delayMicroseconds(200);
-        val = analogRead(44);
+        val = PuppyBotAdcDetail::readMuxBack8(analog_CH);
    }
    else if(Sensor_mode_B == 2){
         // Back 16ch MUX: Out=A13(GPIO45) S0=A14(GPIO46) S1=A15(GPIO47) S2=IO15 S3=IO16
@@ -428,48 +415,8 @@ void wait_SW1_one() {
   buzzer(2000,100);
   
 }
-void wait_SW1() {
-  int state_waitSW1 = 0;
-  pinMode(swpin, INPUT_PULLUP);
+#include "PuppyBotWaitSW1.h"
 
-  tft_.setTextSize(2);
-  tft_.fillScreen(ST77XX_BLACK);
-  tft_.setTextSize(2);
-  tft_.setTextColor(ST77XX_YELLOW, ST77XX_RED);
-    drawString("Wait SW1",30,105);
-    tft_.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
-  do {
-    tft_.setTextSize(2);
-    drawString("0="+String(ADC(0))+"  ",0,0);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("1="+String(ADC(1))+"  ",80,0);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("2="+String(ADC(2))+"  ",0,16);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("3="+String(ADC(3))+"  ",80,16);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("4="+String(ADC(4))+"  ",0,32);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("5="+String(ADC(5))+"  ",80,32);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("6="+String(ADC(6))+"  ",0,48);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("7="+String(ADC(7))+"  ",80,48);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("8="+String(ADC(8))+"  ",0,64);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("9="+String(ADC(9))+"  ",80,64);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("15="+String(ADC(15))+"  ",0,80);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    drawString("G="+String((int)Con_yaw_loop1)+"  ",80,80);if(digitalRead(swpin) == 0){pinMode(swpin,OUTPUT);break;}
-    
-    if(Con_yaw_loop1 > 0){
-      tft_.setTextColor(ST77XX_BLUE, ST77XX_GREEN);
-      drawString("Wait SW1",30,105);
-      tft_.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
-    }
-  } while (digitalRead(swpin) == 1);
-  pinMode(swpin,OUTPUT);
-  // buzzer(500,100);
-  // delay(200);
-  // buzzer(700,100);
-  // delay(200);
-  // buzzer(1000,100);
-  // delay(200);
-  buzzer(2000,100);
-  // pinMode(swpin, OUTPUT);
-  
-}
 void wait_SW1_ALL() {
   int state_waitSW1 = 0;
   pinMode(swpin, INPUT_PULLUP);
@@ -650,117 +597,40 @@ void motor(int pin, int speed_Motor) {
     }
   }
   else if (pin == 7) {
-    if(speed_Motor >0){
-      int speed_MotorA = abs(speed_Motor) * 10.23;
-      motor(1,speed_MotorA);
-      motor(2,speed_MotorA);
-      motor(3,speed_MotorA);
-      motor(4,speed_MotorA);
-      motor(5,speed_MotorA);
-      motor(6,speed_MotorA);
-    }
-    else{
-      int speed_MotorA = abs(speed_Motor) * 10.23;
-      motor(1,-speed_MotorA);
-      motor(2,-speed_MotorA);
-      motor(3,-speed_MotorA);
-      motor(4,-speed_MotorA);
-      motor(5,-speed_MotorA);
-      motor(6,-speed_MotorA);
-    }
+    motor(1, speed_Motor);
+    motor(2, speed_Motor);
   }
 }
-void motor_control(uint8_t state , int _speed) {
+// 0 forward, 1 reverse, 2/3 pivot, 4/5 spin. No lateral/diagonal drive.
+void motor_control(uint8_t state, int speed) {
   switch (state) {
-    case 0: {
-        motor(1, _speed);
-        motor(2, _speed);
-        motor(3, _speed);
-        motor(4, _speed);
-      } break;
-    case 1: {
-        motor(1,- _speed);
-        motor(2,- _speed);
-        motor(3,- _speed);
-        motor(4,- _speed);
-      } break;
-    case 2: {
-        motor(1, 0);
-        motor(2, _speed);
-        motor(3, 0);
-        motor(4, _speed);
-      } break;
-    case 3: {
-        motor(1, _speed);
-        motor(2, 0);
-        motor(3, _speed);
-        motor(4, 0);
-      } break;
-    case 4: {
-        motor(1, -_speed);
-        motor(2, _speed);
-        motor(3,-_speed);
-        motor(4, _speed);
-      } break;
-    case 5: {
-        motor(1, _speed);
-        motor(2, -_speed);
-        motor(3, _speed);
-        motor(4, -_speed);
-      } break;
-    case 6: {
-        motor(1, -_speed);
-        motor(2, _speed);
-        motor(3, _speed);
-        motor(4, -_speed);
-      } break;
-    case 7: {
-        motor(1, _speed);
-        motor(2, -_speed);
-        motor(3, -_speed);
-        motor(4, _speed);
-      } break;
-    case 8: {
-        motor(1, 0);
-        motor(2, _speed);
-        motor(3, _speed);
-        motor(4, 0);
-      } break;
-    case 9: {
-        motor(1, _speed);
-        motor(2, 0);
-        motor(3, 0);
-        motor(4, _speed);
-      } break;
-    
+    case 0: motor(1, speed);  motor(2, speed);  break;
+    case 1: motor(1, -speed); motor(2, -speed); break;
+    case 2: motor(1, 0);      motor(2, speed);  break;
+    case 3: motor(1, speed);  motor(2, 0);      break;
+    case 4: motor(1, -speed); motor(2, speed);  break;
+    case 5: motor(1, speed);  motor(2, -speed); break;
+    default: motor(1, 0); motor(2, 0); break;
   }
 }
 void ao(){
+    resetLinePD();
 	analogWrite(motor1B, 0);
     analogWrite(motor2B, 0);
-    analogWrite(motor3B, 0);
-    analogWrite(motor4B, 0);
-    analogWrite(motor5B, 0);
-    analogWrite(motor6B, 0);
+
 }
 void aoS(int speed_break){
   speed_break = constrain(speed_break, 0, 100);
   speed_break = speed_break * 10.23;
   analogWrite(motor1B, 0);
   analogWrite(motor2B, 0);
-  analogWrite(motor3B, 0);
-  analogWrite(motor4B, 0);
-  analogWrite(motor5B, 0);
-  analogWrite(motor6B, 0);
+
 }
 void motorStop(int motor_ch){
   	if(motor_ch == 0){
 	  analogWrite(motor1B, 0);
     analogWrite(motor2B, 0);
-    analogWrite(motor3B, 0);
-    analogWrite(motor4B, 0);
-    analogWrite(motor5B, 0);
-    analogWrite(motor6B, 0);
+
 	}
 	else if(motor_ch == 1 ){
 	  analogWrite(motor1B, 0);
@@ -781,29 +651,19 @@ void motorStop(int motor_ch){
 	else{
 	  analogWrite(motor1B, 0);
     analogWrite(motor2B, 0);
-    analogWrite(motor3B, 0);
-    analogWrite(motor4B, 0);
-    analogWrite(motor5B, 0);
-    analogWrite(motor6B, 0);
+
 	}
 }
 void motorBreak(){
     analogWrite(motor1B, 0);
     analogWrite(motor2B, 0);
-    analogWrite(motor3B, 0);
-    analogWrite(motor4B, 0);
-    analogWrite(motor5B, 0);
-    analogWrite(motor6B, 0);
+
 }
 void motorBreak(int motor_ch){
   
 	if(motor_ch == 0){
 	  analogWrite(motor1B, 0);
 	  analogWrite(motor2B, 0);
-	  analogWrite(motor3B, 0);
-	  analogWrite(motor4B, 0);
-    analogWrite(motor5B, 0);
-    analogWrite(motor6B, 0);
 
 	}
 	else if(motor_ch == 1 ){
@@ -827,17 +687,13 @@ void motorBreak(int motor_ch){
 	  analogWrite(motor1A, 1023);
 	  analogWrite(motor2B, 1023);
 	  analogWrite(motor2A, 1023);
-	  analogWrite(motor3B, 1023);
-	  analogWrite(motor3A, 1023);
-	  analogWrite(motor4B, 1023);
-	  analogWrite(motor4A, 1023);
+
 	}
 }
 void fd(int speed_Motor){
 	motor(1,speed_Motor);
 	motor(2,speed_Motor);
-	motor(3,speed_Motor);
-	motor(4,speed_Motor);
+
 }
 void fd2(int speed_MotorA,int speed_MotorB){
   motor(1,speed_MotorA);
@@ -846,8 +702,7 @@ void fd2(int speed_MotorA,int speed_MotorB){
 void bk(int speed_Motor){
 	motor(1,-speed_Motor);
 	motor(2,-speed_Motor);
-	motor(3,-speed_Motor);
-	motor(4,-speed_Motor);
+
 }
 void bk2(int speed_MotorA,int speed_MotorB){
   motor(1,-speed_MotorA);
@@ -870,61 +725,6 @@ void sr(int speed_Motor){
 	motor(2,-speed_Motor);
 }
 
-// void servoRun(uint8_t servo_ch, int16_t angle) {
-
-//   if (servo_ch == 1)
-//   {
-//     servo1.attach(34);
-//     servo1.write(angle);
-//   }
-//   if (servo_ch == 2)
-//   {
-//     if(angle == -1){servo2.detach();}
-//     servo2.attach(_servo2,300,2500,angle);
-//   }
-//   if (servo_ch == 3)
-//   {
-//     if(angle == -1){servo3.detach();}
-//     servo3.attach(_servo3,300,2500,angle);
-//   }
-//   if (servo_ch == 4)
-//   {
-//     if(angle == -1){servo4.detach();}
-//     servo4.attach(_servo4,300,2500,angle);
-//   }
-// }
-void control_servo(int servo_ch,int servo_degree,int traget_degree,int servo_speed){
-  if(abs(current_degree_servo - traget_degree) > 2){
-    if(servo_degree < traget_degree ){
-      for(int i = servo_degree;i<traget_degree;i++){
-        servoRun(servo_ch,i);
-        delay(servo_speed);
-        current_degree_servo = i;
-      }
-    }
-    else {
-      for(int i = servo_degree;i>traget_degree;i--){
-        servoRun(servo_ch,i);
-        delay(servo_speed);
-        current_degree_servo = i;
-      }
-    }
-  }
-}
-void servoSweep(int channel, int startAngle, int endAngle, int step, int delayMs) {
-  if (channel < 0 || channel >= SERVO_COUNT) return;
-  if (startAngle < endAngle) {
-    for (int a = startAngle; a <= endAngle; a += step) {
-      servoRun(channel, a);
-      delay(delayMs);
-    }
-  } else {
-    for (int a = startAngle; a >= endAngle; a -= step) {
-      servoRun(channel, a);
-      delay(delayMs);
-    }
-  }
-}
 float ultrasonic(uint8_t Echo_pin , uint8_t Trig_pin) {
   int ECHO = Echo_pin;
   int TRIG = Trig_pin;
@@ -1004,27 +804,18 @@ void setCalibrate(int round){
   // display.drawString(0,25,"  Calribrate  ");
   // display.display();
   if(first_state_for_calribrate == 0){
-    for (uint8_t i = 0; i < PID_NumPin; i++)
+    for (uint8_t i = 0; i < PID_NumPin && i < 16; i++)
     {
       PID_Max[i] = 0;
-      PID_Min[i] = 1023;
+      PID_Min[i] = 65535;
     }
     first_state_for_calribrate = 1;
   }
   for(int roundOfCalribtate = 0; roundOfCalribtate < round ;roundOfCalribtate++ ){
-    for (uint8_t i = 0; i < PID_NumPin; i++)
-    {
-      if(ADC_F(PID_SetupPin[i]) > PID_Max[i] || PID_Max[i] >= 1023 ){
-        PID_Max[i]  = ADC_F(PID_SetupPin[i]);
-        if(PID_Max[i] > 1023 )PID_Max[i] = 1023;
-      }
-    }
-    for (uint8_t i = 0; i < PID_NumPin; i++)
-    {
-      if(ADC_F(PID_SetupPin[i]) < PID_Min[i] || PID_Min[i] == 0){
-        PID_Min[i] = ADC_F(PID_SetupPin[i]);
-        if(PID_Min[i] < 0) PID_Min[i] = 0;
-      }
+    for (uint8_t i = 0; i < PID_NumPin && i < 16; i++) {
+      const int raw = ADC_F(PID_SetupPin[i]);
+      if (raw > PID_Max[i]) PID_Max[i] = raw;
+      if (raw < PID_Min[i]) PID_Min[i] = raw;
     }
     delay(1);
   }
@@ -1098,32 +889,27 @@ int ReadSensorMaxValue(uint8_t _Pin){
 //   return _lastPosition;  // ส่งคืนตำแหน่งที่คำนวณได้
 // }
 int readline()   
-{                
+{
+  state_on_Line = 0;
+  if (PID_NumPin < 1 || PID_NumPin > 16) return 0;
   int onLine = 0;
   long avg = 0;
   long sum = 0;
-  for (uint8_t i = 0; i < PID_NumPin ; i++) 
+  for (uint8_t i = 0; i < PID_NumPin && i < 16; i++)
   {
-    long value;
-    if(Front_color == 0){
-      value = map(ADC_F(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 100, 0);
-    }
-    else {
-      value = map(ADC_F(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 0, 100);
-    }
-    
-    value = constrain(value,0,100);      
+    long value = PuppyBotLineDetail::normalized(false, i, ADC_F(PID_SetupPin[i]));
     if (value > 100 - _Sensitive_F) { 
       onLine = 1;
     }
     if (value > 5){
-      avg += (long)value * (i * 100)+ 50;
+      avg += (long)value * (i * 100);
       sum += value;
     }
   }
-  if (onLine == 0)
+  state_on_Line = (onLine != 0 && sum > 0) ? 1 : 0;
+  if (onLine == 0 || sum == 0)
   {
-    if (_lastPosition < ((PID_NumPin-1) * 100)/2){
+    if (_lastPosition < uint32_t(((PID_NumPin-1) * 100)/2)){
       return 0;
     }
     else{
@@ -1134,39 +920,19 @@ int readline()
   return _lastPosition;
 }
 void Run_PID(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
-  
-  int present_position = readline();
-  int setpoint = ((PID_NumPin - 1) * 100) / 2;
-  errors = present_position - setpoint;
-  integral = integral + errors ;
-  derivative = (errors - previous_error) ;
-  output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
-    
-  int m1Speed = RUN_PID_speed + output ;
-  int m2Speed = RUN_PID_speed - output;
-  motor(1,m1Speed);
-  motor(2,m2Speed);
+  using namespace PuppyBotLinePDDetail;
+  const int position = readline();
+  if (!legacyFront.step(options, false, position, ((PID_NumPin - 1) * 100) / 2,
+      RUN_PID_speed, RUN_PID_KP, RUN_PID_KD, millis(), 20, state_on_Line != 0)) { ao(); return; }
+  const auto values = legacyFront.telemetry();
+  errors = values.error; derivative = values.dFiltered;
+  output = values.correction; previous_error = errors;
+  motor(1, int(lroundf(values.command1))); motor(2, int(lroundf(values.command2)));
+  publish(values, LinePDSource::Legacy);
+  if (monitorService) monitorService();
   delay(1);
-  previous_error = errors;
 }
-void Run_PID4DW(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
-  
-  int present_position = readline();
-  int setpoint = ((PID_NumPin - 1) * 100) / 2;
-  errors = present_position - setpoint;
-  integral = integral + errors ;
-  derivative = (errors - previous_error) ;
-  output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
-    
-  int m1Speed = RUN_PID_speed + output ;
-  int m2Speed = RUN_PID_speed - output;
-  motor(1,m1Speed);
-  motor(2,m2Speed);
-  motor(3,m1Speed);
-  motor(4,m2Speed);
-  delay(1);
-  previous_error = errors;
-}
+
 
 
 
@@ -1218,27 +984,18 @@ void setCalibrate_B(int round){
   // display.drawString(0,25,"  Calribrate  ");
   // display.display();
   if(first_state_for_calribrate_B == 0){
-    for (uint8_t i = 0; i < PID_NumPin_B; i++)
+    for (uint8_t i = 0; i < PID_NumPin_B && i < 16; i++)
     {
       PID_Max_B[i] = 0;
-      PID_Min_B[i] = 1023;
+      PID_Min_B[i] = 65535;
     }
     first_state_for_calribrate_B = 1;
   }
   for(int roundOfCalribtate = 0; roundOfCalribtate < round ;roundOfCalribtate++ ){
-    for (uint8_t i = 0; i < PID_NumPin_B; i++)
-    {
-      if(ADC_B(PID_SetupPin_B[i]) > PID_Max_B[i] || PID_Max_B[i] >= 1023 ){
-        PID_Max_B[i]  = ADC_B(PID_SetupPin_B[i]);
-        if(PID_Max_B[i] > 1023 )PID_Max_B[i] = 1023;
-      }
-    }
-    for (uint8_t i = 0; i < PID_NumPin_B; i++)
-    {
-      if(ADC_B(PID_SetupPin_B[i]) < PID_Min_B[i] || PID_Min_B[i] == 0){
-        PID_Min_B[i] = ADC_B(PID_SetupPin_B[i]);
-        if(PID_Min_B[i] < 0) PID_Min_B[i] = 0;
-      }
+    for (uint8_t i = 0; i < PID_NumPin_B && i < 16; i++) {
+      const int raw = ADC_B(PID_SetupPin_B[i]);
+      if (raw > PID_Max_B[i]) PID_Max_B[i] = raw;
+      if (raw < PID_Min_B[i]) PID_Min_B[i] = raw;
     }
     delay(1);
   }
@@ -1247,31 +1004,27 @@ void setCalibrate_B(int round){
   buzzer(700,100);
 }
 int readline_B()   
-{                
+{
+  state_on_Line_B = 0;
+  if (PID_NumPin_B < 1 || PID_NumPin_B > 16) return 0;
   bool onLine_B = false;
   long avg_B = 0;
   long sum_B = 0;
-  for (uint8_t i = 0; i < PID_NumPin_B ; i++) 
+  for (uint8_t i = 0; i < PID_NumPin_B && i < 16; i++)
   {
-    long value_B;
-    if(Back_color == 0){
-      value_B = map(ADC_B(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 100, 0);
-    }
-    else {
-      value_B = map(ADC_B(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 0, 100);
-    }
-    value_B = constrain(value_B,0,100); 
+    long value_B = PuppyBotLineDetail::normalized(true, i, ADC_B(PID_SetupPin_B[i]));
     if (value_B > 100 - _Sensitive_B) { 
       onLine_B = true;
     }
     if (value_B > 5){
-      avg_B += (long)value_B * (i * 100)+50;
+      avg_B += (long)value_B * (i * 100);
       sum_B += value_B;
     }
   }
-  if (!onLine_B)
+  state_on_Line_B = (onLine_B && sum_B > 0) ? 1 : 0;
+  if (!onLine_B || sum_B == 0)
   {
-    if (_lastPosition_B < ((PID_NumPin_B-1) * 100)/2){
+    if (_lastPosition_B < uint32_t(((PID_NumPin_B-1) * 100)/2)){
       return 0;
     }
     else{
@@ -1282,76 +1035,44 @@ int readline_B()
   return _lastPosition_B;
 }
 void Run_PID_B(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
-  int present_position_B = readline_B();
-  int setpoint_B = ((PID_NumPin_B - 1) * 100) / 2;
-  errors_B = present_position_B - setpoint_B;
-  integral_B = integral_B + errors_B ;
-  derivative_B = (errors_B - previous_error_B) ;
-  output_B = RUN_PID_KP * errors_B  + RUN_PID_KD * derivative_B;
-  
-  int m1Speed = RUN_PID_speed - output_B ;
-  int m2Speed = RUN_PID_speed + output_B;
-
-  motor(1,-m1Speed);
-  motor(2,-m2Speed);
+  using namespace PuppyBotLinePDDetail;
+  const int position = readline_B();
+  if (!legacyBack.step(options, true, position, ((PID_NumPin_B - 1) * 100) / 2,
+      RUN_PID_speed, RUN_PID_KP, RUN_PID_KD, millis(), 20, state_on_Line_B != 0)) { ao(); return; }
+  const auto values = legacyBack.telemetry();
+  errors_B = values.error; derivative_B = values.dFiltered;
+  output_B = values.correction; previous_error_B = errors_B;
+  motor(1, int(lroundf(values.command1))); motor(2, int(lroundf(values.command2)));
+  publish(values, LinePDSource::Legacy);
+  if (monitorService) monitorService();
   delay(1);
-  previous_error_B = errors_B;
 }
-void Run_PID_B4DW(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
-  int present_position_B = readline_B();
-  int setpoint_B = ((PID_NumPin_B - 1) * 100) / 2;
-  errors_B = present_position_B - setpoint_B;
-  integral_B = integral_B + errors_B ;
-  derivative_B = (errors_B - previous_error_B) ;
-  output_B = RUN_PID_KP * errors_B  + RUN_PID_KD * derivative_B;
-  
-  int m1Speed = RUN_PID_speed - output_B ;
-  int m2Speed = RUN_PID_speed + output_B;
 
-  motor(1,-m1Speed);
-  motor(2,-m2Speed);
-  motor(3,-m1Speed);
-  motor(4,-m2Speed);
-  delay(1);
-  previous_error_B = errors_B;
-}
 
 
 
 
 bool Read_status_sensor(int pin_sensor){
-	return ADC_F(PID_SetupPin[pin_sensor]) < ((PID_Max[pin_sensor] + PID_Min[pin_sensor]) / 2) ? true : false;
+  if (pin_sensor < 0 || pin_sensor >= PID_NumPin || pin_sensor >= 16) return false;
+  return PuppyBotLineDetail::normalized(false, pin_sensor, ADC_F(PID_SetupPin[pin_sensor])) > 50;
 }
 bool Read_status_sensor_B(int pin_sensor){
-	return ADC_B(PID_SetupPin_B[pin_sensor]) < ((PID_Max_B[pin_sensor] + PID_Min_B[pin_sensor]) / 2) ? true : false;
+  if (pin_sensor < 0 || pin_sensor >= PID_NumPin_B || pin_sensor >= 16) return false;
+  return PuppyBotLineDetail::normalized(true, pin_sensor, ADC_B(PID_SetupPin_B[pin_sensor])) > 50;
 }
 
 int Read_sumValue_sensor(){
-	int value = 0;
-	for(int i = 0;i<PID_NumPin;i++){
-		if(Front_color == 0){
-	      value += map(ADC_F(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 100, 0);
-	    }
-	    else {
-	      value += map(ADC_F(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 0, 100);
-	    }	
-	}
-	 
-    return value;
+  int value = 0;
+  for (int i = 0; i < PID_NumPin && i < 16; ++i)
+    value += PuppyBotLineDetail::normalized(false, i, ADC_F(PID_SetupPin[i]));
+  return value;
 }
 
 int Read_sumValue_sensor_B(){
   int value = 0;
-  for(int i = 0;i<PID_NumPin_B;i++){
-    if(Back_color == 0){
-        value += map(ADC_B(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 100, 0);
-      }
-      else {
-        value += map(ADC_B(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 0, 100);
-      } 
-  }
-   
-    return value;
+  for (int i = 0; i < PID_NumPin_B && i < 16; ++i)
+    value += PuppyBotLineDetail::normalized(true, i, ADC_B(PID_SetupPin_B[i]));
+  return value;
 }
 
 
@@ -1363,81 +1084,16 @@ int ReadSensorMaxValue_B(uint8_t _Pin){
 }
 
 void Run_PID_B_until_backSensor(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD,int sumValue_traget){
-  do{
-    int present_position_B = readline_B();
-    int setpoint_B = ((PID_NumPin_B - 1) * 100) / 2;
-    errors_B = present_position_B - setpoint_B;
-    integral_B = integral_B + errors_B ;
-    derivative_B = (errors_B - previous_error_B) ;
-    output_B = RUN_PID_KP * errors_B  + RUN_PID_KD * derivative_B;
-    
-    int m1Speed = RUN_PID_speed - output_B ;
-    int m2Speed = RUN_PID_speed + output_B;
-
-    motor(1,-m1Speed);
-    motor(2,-m2Speed);
-    delay(1);
-    previous_error_B = errors_B;
-  }while(Read_sumValue_sensor_B() < sumValue_traget);
+  do { Run_PID_B(RUN_PID_speed, RUN_PID_KP, RUN_PID_KD); }
+  while (Read_sumValue_sensor_B() < sumValue_traget);
 }
-void Run_PID_B4DW_until_backSensor(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD ,int sumValue_traget){
-  do{
-    int present_position_B = readline_B();
-    int setpoint_B = ((PID_NumPin_B - 1) * 100) / 2;
-    errors_B = present_position_B - setpoint_B;
-    integral_B = integral_B + errors_B ;
-    derivative_B = (errors_B - previous_error_B) ;
-    output_B = RUN_PID_KP * errors_B  + RUN_PID_KD * derivative_B;
-    
-    int m1Speed = RUN_PID_speed - output_B ;
-    int m2Speed = RUN_PID_speed + output_B;
 
-    motor(1,-m1Speed);
-    motor(2,-m2Speed);
-    motor(3,-m1Speed);
-    motor(4,-m2Speed);
-    delay(1);
-    previous_error_B = errors_B;
-  }while(Read_sumValue_sensor_B() < sumValue_traget);
-}
 
 void Run_PID_until_frontSensor(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD,int sumValue_traget){
-  do{
-    int present_position = readline();
-    int setpoint = ((PID_NumPin - 1) * 100) / 2;
-    errors = present_position - setpoint;
-    integral = integral + errors ;
-    derivative = (errors - previous_error) ;
-    output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
-    
-    int m1Speed = RUN_PID_speed + output ;
-    int m2Speed = RUN_PID_speed - output;
-    motor(1,m1Speed);
-    motor(2,m2Speed);
-    delay(1);
-    previous_error = errors;
-  }while(Read_sumValue_sensor() < sumValue_traget);
+  do { Run_PID(RUN_PID_speed, RUN_PID_KP, RUN_PID_KD); }
+  while (Read_sumValue_sensor() < sumValue_traget);
 }
-void Run_PID4DW_until_frontSensor(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD ,int sumValue_traget){
-  do{
-    int present_position = readline();
-    int setpoint = ((PID_NumPin - 1) * 100) / 2;
-    errors = present_position - setpoint;
-    integral = integral + errors ;
-    derivative = (errors - previous_error) ;
-    output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
-    
 
-    int m1Speed = RUN_PID_speed + output ;
-    int m2Speed = RUN_PID_speed - output;
-    motor(1,m1Speed);
-    motor(2,m2Speed);
-    motor(3,m1Speed);
-    motor(4,m2Speed);
-    delay(1);
-    previous_error = errors;
-  }while(Read_sumValue_sensor() < sumValue_traget);
-}
 
 void set_TCS_back(){
 	// Wire1.setSDA(6);

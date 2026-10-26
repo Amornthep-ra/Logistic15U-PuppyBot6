@@ -5,7 +5,7 @@ import json
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 BASE = "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main"
 
 
@@ -26,7 +26,7 @@ def archive(source, name, prefix):
             if path.name in {"ICM20948wire1.h", "HALwire1.h"}:
                 raise ValueError(f"Legacy SDK adapter in distribution: {path}")
             data = path.read_bytes()
-            info = zipfile.ZipInfo(f"{prefix}/{relative}", (2026, 10, 21, 0, 0, 0))
+            info = zipfile.ZipInfo(f"{prefix}/{relative}", (2026, 10, 26, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             out.writestr(info, data)
@@ -45,8 +45,12 @@ def main():
                 "category": "Contributed", "help": {"online": "https://github.com/Amornthep-ra/Logistic15U-PuppyBot6"},
                 "boards": [{"name": "Logistic15U-PuppyBot6"}], "toolsDependencies": []}
     platform.update({key: value for key, value in board.items() if key != "files"})
+    # Keep earlier published platforms so Boards Manager can still install them; newest first.
+    index_path = ROOT / "package_logistic15u_index.json"
+    previous = json.loads(index_path.read_text(encoding="utf-8"))["packages"][0]["platforms"] if index_path.exists() else []
+    platforms = [platform] + [item for item in previous if item["version"] != VERSION]
     package = {"name": "logistic15u", "maintainer": "PrinceBot", "websiteURL": "https://github.com/Amornthep-ra/Logistic15U-PuppyBot6",
-               "email": "", "help": platform["help"], "platforms": [platform], "tools": []}
+               "email": "", "help": platform["help"], "platforms": platforms, "tools": []}
     write_json(ROOT / "package_logistic15u_index.json", {"packages": [package]})
     write_json(ROOT / "dist/manifest.json", {"version": VERSION, "base_core": "rp2040:rp2040@6.2.0", "library": library, "board": board})
     for item in (library, board):

@@ -6,11 +6,10 @@ static const int KB_EXTRA_ENC = 0;
 static const int KB_EXTRA_TIME = 1;
 
 // Run PID line follow until target pulses (with timeout)
-// driveMode: 0=2WD (Run_PID), 1=4WD (Run_PID4DW)
+// Fixed 2WD using Run_PID.
 // signedSpeed: positive for forward, negative for backward
 // readEnc: function pointer returning current encoder pulses
-static inline void follow_line_by_encoder_safe(int driveMode,
-                                               int signedSpeed,
+static inline void follow_line_by_encoder_safe(int signedSpeed,
                                                float kp,
                                                float kd,
                                                long targetPulses,
@@ -26,19 +25,14 @@ static inline void follow_line_by_encoder_safe(int driveMode,
       timedOut = true;
       break;
     }
-    if (driveMode == 1) {
-      Run_PID4DW(signedSpeed, kp, kd);
-    } else {
-      Run_PID(signedSpeed, kp, kd);
-    }
+    Run_PID(signedSpeed, kp, kd);
   }
   ao();
   if (!timedOut) delay(50);
 }
 
 // Run PID line follow until target pulses, store traveled pulses, optional reset & timeout
-static inline void follow_line_by_encoder_store_safe(int driveMode,
-                                                     int signedSpeed,
+static inline void follow_line_by_encoder_store_safe(int signedSpeed,
                                                      float kp,
                                                      float kd,
                                                      long targetPulses,
@@ -59,11 +53,7 @@ static inline void follow_line_by_encoder_store_safe(int driveMode,
       timedOut = true;
       break;
     }
-    if (driveMode == 1) {
-      Run_PID4DW(signedSpeed, kp, kd);
-    } else {
-      Run_PID(signedSpeed, kp, kd);
-    }
+    Run_PID(signedSpeed, kp, kd);
   }
   long finalEnc = readEnc();
   long traveled = labs(finalEnc - base);
@@ -73,8 +63,7 @@ static inline void follow_line_by_encoder_store_safe(int driveMode,
 }
 
 // Follow line counting crossings; extra move by encoder or time; optional reset & timeout
-static inline void follow_line_cross_safe(int driveMode,
-                                          int signedSpeed,
+static inline void follow_line_cross_safe(int signedSpeed,
                                           float kp,
                                           float kd,
                                           long sumThreshold,
@@ -98,11 +87,7 @@ static inline void follow_line_cross_safe(int driveMode,
       timedOut = true;
       break;
     }
-    if (driveMode == 1) {
-      Run_PID4DW(signedSpeed, kp, kd);
-    } else {
-      Run_PID(signedSpeed, kp, kd);
-    }
+    Run_PID(signedSpeed, kp, kd);
     if (Read_sumValue_sensor() > sumThreshold) {
       count++;
       delay(50);  // debounce crossings
@@ -117,11 +102,7 @@ static inline void follow_line_cross_safe(int driveMode,
           timedOut = true;
           break;
         }
-        if (driveMode == 1) {
-          Run_PID4DW(signedSpeed, kp, kd);
-        } else {
-          Run_PID(signedSpeed, kp, kd);
-        }
+        Run_PID(signedSpeed, kp, kd);
       }
     } else {  // KB_EXTRA_TIME
       unsigned long extraStart = millis();
@@ -130,11 +111,7 @@ static inline void follow_line_cross_safe(int driveMode,
           timedOut = true;
           break;
         }
-        if (driveMode == 1) {
-          Run_PID4DW(signedSpeed, kp, kd);
-        } else {
-          Run_PID(signedSpeed, kp, kd);
-        }
+        Run_PID(signedSpeed, kp, kd);
       }
     }
   }

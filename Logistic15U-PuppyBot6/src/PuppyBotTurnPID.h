@@ -1,3 +1,5 @@
+#pragma once
+// Fixed differential 2WD: drive commands use motor channels 1 and 2.
 #include "PuppyBotIMU.h"
 enum Direction_turnPID { NORTH = 0,
                          EAST = 1,
@@ -66,27 +68,15 @@ void turnPID(int condition, float targetYaw_turnPID, int speedTurn_min, int spee
         // 2 ล้อ (ซ้ายหยุด ขวาหมุนหน้า)
         motor(1, 0);
         motor(2, speed_R);
-        if (Set_Mode_Gyro == 0) {
-          motor(3, 0);
-          motor(4, speed_R);
-        }
       } else if (condition == 0) {
-        // 4 ล้อ (เลี้ยวรถถัง)
+        // หมุนอยู่กับที่ด้วยมอเตอร์ซ้ายและขวา
         motor(1, -speed_L);
         motor(2, speed_R);
-        if (Set_Mode_Gyro == 0) {
-          motor(3, -speed_L);
-          motor(4, speed_R);
-        }
       }
       if (condition == 2) {
         // 2 ล้อ (ซ้ายหยุด ขวาหมุนหน้า)
         motor(1, -speed_L);
         motor(2, 0);
-        if (Set_Mode_Gyro == 0) {
-          motor(3, -speed_L);
-          motor(4, 0);
-        }
       }
     } else {
       // เลี้ยวขวา
@@ -94,27 +84,15 @@ void turnPID(int condition, float targetYaw_turnPID, int speedTurn_min, int spee
         // 2 ล้อ (ขวาหยุด ซ้ายหมุนหน้า)
         motor(1, speed_L);
         motor(2, 0);
-        if (Set_Mode_Gyro == 0) {
-          motor(3, speed_L);
-          motor(4, 0);
-        }
       } else if (condition == 0) {
-        // 4 ล้อ (เลี้ยวรถถัง)
+        // หมุนอยู่กับที่ด้วยมอเตอร์ซ้ายและขวา
         motor(1, speed_L);
         motor(2, -speed_R);
-        if (Set_Mode_Gyro == 0) {
-          motor(3, speed_L);
-          motor(4, -speed_R);
-        }
       }
       if (condition == 2) {
         // 2 ล้อ (ขวาหยุด ซ้ายหมุนหน้า)
         motor(1, 0);
         motor(2, -speed_R);
-        if (Set_Mode_Gyro == 0) {
-          motor(3, 0);
-          motor(4,-speed_R);
-        }
       }
     }
 
@@ -227,17 +205,9 @@ void moveStraightPID_Accel(
         if (Movedirection == 0) {  // เดินหน้า
             motor(1, leftSpeed);
             motor(2, rightSpeed);
-            if (Set_Mode_Gyro == 0) {
-                motor(3, leftSpeed);
-                motor(4, rightSpeed);
-            }
         } else {                   // ถอยหลัง
             motor(1, -rightSpeed);
             motor(2, -leftSpeed);
-            if (Set_Mode_Gyro == 0) {
-                motor(3, -rightSpeed);
-                motor(4, -leftSpeed);
-            }
         }
     }
     ao(); // หยุดเมื่อครบเวลา
@@ -290,18 +260,10 @@ void moveStraightPID(int Movedirection, float targetYaw_straight, int speedBase,
         if (Movedirection == 0) {  // เดินหน้า
             motor(1, leftSpeed);
             motor(2, rightSpeed);
-            if(Set_Mode_Gyro == 0){
-              motor(3, leftSpeed);
-              motor(4, rightSpeed);
-            }
             
         } else {  // ถอยหลัง
             motor(1, -rightSpeed);
             motor(2, -leftSpeed);
-            if(Set_Mode_Gyro == 0){
-              motor(3, -rightSpeed);
-              motor(4, -leftSpeed);
-            } 
         }
     }
     ao(); 
@@ -396,13 +358,13 @@ void moveStraightPID_Encoder(int Movedirection, float targetYaw_straight, int sp
     if (Movedirection == 0) {  // เดินหน้า
       motor(1, leftSpeed);
       motor(2, rightSpeed);
-      motor(3, leftSpeed);
-      motor(4, rightSpeed);
+
+
     } else {  // ถอยหลัง
       motor(1, -rightSpeed);
       motor(2, -leftSpeed);
-      motor(3, -rightSpeed);
-      motor(4, -leftSpeed);
+
+
     }
 
 
@@ -502,359 +464,6 @@ void moveStraightSnapToNearest(int Movedirection, int speedBase, int target_enco
   moveStraightPID_Encoder(Movedirection, snappedYaw, speedBase, target_encoder, kp, ki, kd, Slow);
 }
 
-// Mecanum slide with snap-to-nearest heading (0/90/180/270)
-static inline void mecanumSlideSnapPID_time(int dir, int speedBase, float duration,
-                                            float kp, float ki, float kd, int Slow)
-{
-  float currentYaw = Con_yaw_loop1;
-  int snappedYaw = getClosestAngle(currentYaw);
-
-  unsigned long startTime = millis();
-  unsigned long startTime_reduc = millis();
-  unsigned long endTime = startTime + (unsigned long)duration;
-
-  float integral = 0.0f;
-  float prev_error = 0.0f;
-
-  while (millis() < endTime) {
-    float error = normalizeAngle(snappedYaw - Con_yaw_loop1);
-
-    unsigned long now = millis();
-    float deltaTime = max((now - startTime) / 1000.0f, 0.001f);
-    startTime = now;
-
-    integral += error * deltaTime;
-    integral = constrain(integral, -50, 50);
-    float derivative = (error - prev_error) / deltaTime;
-    float output = kp * error + ki * integral + kd * derivative;
-    prev_error = error;
-
-    int baseSpeed;
-    if (Slow == 1) {
-      long timeError = endTime - now;
-      float speedReduction;
-      if (timeError <= 500 && timeError > 0) {
-        speedReduction = timeError * 0.01f;
-        speedReduction = constrain(speedReduction, 0, speedBase);
-      } else if (timeError <= 0) {
-        speedReduction = 0;
-      } else {
-        speedReduction = speedBase;
-      }
-      baseSpeed = (int)speedReduction;
-    } else {
-      baseSpeed = speedBase;
-    }
-
-    int fl, fr, rl, rr;
-    if (dir == 0) { // slide left
-      fl = -baseSpeed;
-      fr = baseSpeed;
-      rl = baseSpeed;
-      rr = -baseSpeed;
-    } else { // slide right
-      fl = baseSpeed;
-      fr = -baseSpeed;
-      rl = -baseSpeed;
-      rr = baseSpeed;
-    }
-
-    fl = constrain(fl + output, -100, 100);
-    rl = constrain(rl + output, -100, 100);
-    fr = constrain(fr - output, -100, 100);
-    rr = constrain(rr - output, -100, 100);
-
-    motor(1, fl);
-    motor(2, fr);
-    if (Set_Mode_Gyro == 0) {
-      motor(3, rl);
-      motor(4, rr);
-    }
-  }
-  ao();
-}
-
-// Mecanum slide with fixed target heading (0/90/180/270 or custom)
-static inline void mecanumSlidePID_time(int dir, int speedBase, float duration,
-                                        float targetYaw, float kp, float ki, float kd, int Slow)
-{
-  unsigned long startTime = millis();
-  unsigned long startTime_reduc = millis();
-  unsigned long endTime = startTime + (unsigned long)duration;
-
-  float integral = 0.0f;
-  float prev_error = 0.0f;
-
-  while (millis() < endTime) {
-    float error = normalizeAngle(targetYaw - Con_yaw_loop1);
-
-    unsigned long now = millis();
-    float deltaTime = max((now - startTime) / 1000.0f, 0.001f);
-    startTime = now;
-
-    integral += error * deltaTime;
-    integral = constrain(integral, -50, 50);
-    float derivative = (error - prev_error) / deltaTime;
-    float output = kp * error + ki * integral + kd * derivative;
-    prev_error = error;
-
-    int baseSpeed;
-    if (Slow == 1) {
-      long timeError = endTime - now;
-      float speedReduction;
-      if (timeError <= 500 && timeError > 0) {
-        speedReduction = timeError * 0.01f;
-        speedReduction = constrain(speedReduction, 0, speedBase);
-      } else if (timeError <= 0) {
-        speedReduction = 0;
-      } else {
-        speedReduction = speedBase;
-      }
-      baseSpeed = (int)speedReduction;
-    } else {
-      baseSpeed = speedBase;
-    }
-
-    int fl, fr, rl, rr;
-    if (dir == 0) { // slide left
-      fl = -baseSpeed;
-      fr = baseSpeed;
-      rl = baseSpeed;
-      rr = -baseSpeed;
-    } else { // slide right
-      fl = baseSpeed;
-      fr = -baseSpeed;
-      rl = -baseSpeed;
-      rr = baseSpeed;
-    }
-
-    fl = constrain(fl + output, -100, 100);
-    rl = constrain(rl + output, -100, 100);
-    fr = constrain(fr - output, -100, 100);
-    rr = constrain(rr - output, -100, 100);
-
-    motor(1, fl);
-    motor(2, fr);
-    if (Set_Mode_Gyro == 0) {
-      motor(3, rl);
-      motor(4, rr);
-    }
-  }
-  ao();
-}
-
-static inline void mecanumSlideSnapPID_Encoder(int dir, int speedBase, long target_encoder,
-                                               float kp, float ki, float kd, int Slow)
-{
-  float currentYaw = Con_yaw_loop1;
-  int snappedYaw = getClosestAngle(currentYaw);
-
-  long initialEncoder = get_pulse_Encoder(selection_Encoder);
-  float integral = 0.0f;
-  float prev_error = 0.0f;
-  unsigned long lastTime = millis();
-
-  while (abs(get_pulse_Encoder(selection_Encoder) - initialEncoder) < target_encoder) {
-    float error = normalizeAngle(snappedYaw - Con_yaw_loop1);
-
-    unsigned long now = millis();
-    float deltaTime = max((now - lastTime) / 1000.0f, 0.001f);
-    lastTime = now;
-
-    integral += error * deltaTime;
-    integral = constrain(integral, -50, 50);
-    float derivative = (error - prev_error) / deltaTime;
-    float output = kp * error + ki * integral + kd * derivative;
-    prev_error = error;
-
-    int baseSpeed = speedBase;
-    if (Slow == 1) {
-      long moved = abs(get_pulse_Encoder(selection_Encoder) - initialEncoder);
-      long remain = target_encoder - moved;
-      long s = (long)(remain * 0.05f);
-      if (s < 10) s = 10;
-      if (s < baseSpeed) baseSpeed = (int)s;
-    }
-
-    int fl, fr, rl, rr;
-    if (dir == 0) { // slide left
-      fl = -baseSpeed;
-      fr = baseSpeed;
-      rl = baseSpeed;
-      rr = -baseSpeed;
-    } else { // slide right
-      fl = baseSpeed;
-      fr = -baseSpeed;
-      rl = -baseSpeed;
-      rr = baseSpeed;
-    }
-
-    fl = constrain(fl + output, -100, 100);
-    rl = constrain(rl + output, -100, 100);
-    fr = constrain(fr - output, -100, 100);
-    rr = constrain(rr - output, -100, 100);
-
-    motor(1, fl);
-    motor(2, fr);
-    if (Set_Mode_Gyro == 0) {
-      motor(3, rl);
-      motor(4, rr);
-    }
-  }
-  ao();
-}
-
-static inline void mecanumSlidePID_Encoder(int dir, int speedBase, long target_encoder,
-                                           float targetYaw, float kp, float ki, float kd, int Slow)
-{
-  long initialEncoder = get_pulse_Encoder(selection_Encoder);
-  float integral = 0.0f;
-  float prev_error = 0.0f;
-  unsigned long lastTime = millis();
-
-  while (abs(get_pulse_Encoder(selection_Encoder) - initialEncoder) < target_encoder) {
-    float error = normalizeAngle(targetYaw - Con_yaw_loop1);
-
-    unsigned long now = millis();
-    float deltaTime = max((now - lastTime) / 1000.0f, 0.001f);
-    lastTime = now;
-
-    integral += error * deltaTime;
-    integral = constrain(integral, -50, 50);
-    float derivative = (error - prev_error) / deltaTime;
-    float output = kp * error + ki * integral + kd * derivative;
-    prev_error = error;
-
-    int baseSpeed = speedBase;
-    if (Slow == 1) {
-      long moved = abs(get_pulse_Encoder(selection_Encoder) - initialEncoder);
-      long remain = target_encoder - moved;
-      long s = (long)(remain * 0.05f);
-      if (s < 10) s = 10;
-      if (s < baseSpeed) baseSpeed = (int)s;
-    }
-
-    int fl, fr, rl, rr;
-    if (dir == 0) { // slide left
-      fl = -baseSpeed;
-      fr = baseSpeed;
-      rl = baseSpeed;
-      rr = -baseSpeed;
-    } else { // slide right
-      fl = baseSpeed;
-      fr = -baseSpeed;
-      rl = -baseSpeed;
-      rr = baseSpeed;
-    }
-
-    fl = constrain(fl + output, -100, 100);
-    rl = constrain(rl + output, -100, 100);
-    fr = constrain(fr - output, -100, 100);
-    rr = constrain(rr - output, -100, 100);
-
-    motor(1, fl);
-    motor(2, fr);
-    if (Set_Mode_Gyro == 0) {
-      motor(3, rl);
-      motor(4, rr);
-    }
-  }
-  ao();
-}
-
-// Loop-only mecanum slide (snap heading); call repeatedly in loop
-static inline void mecanumSlideSnapPID_step(int dir, int speedBase,
-                                            float kp, float ki, float kd)
-{
-  static float integral = 0.0f;
-  static float prev_error = 0.0f;
-  static unsigned long lastTime = millis();
-
-  int snappedYaw = getClosestAngle(Con_yaw_loop1);
-  float error = normalizeAngle(snappedYaw - Con_yaw_loop1);
-
-  unsigned long now = millis();
-  float deltaTime = max((now - lastTime) / 1000.0f, 0.001f);
-  lastTime = now;
-
-  integral += error * deltaTime;
-  integral = constrain(integral, -50, 50);
-  float derivative = (error - prev_error) / deltaTime;
-  prev_error = error;
-  float output = kp * error + ki * integral + kd * derivative;
-
-  int fl, fr, rl, rr;
-  if (dir == 0) { // slide left
-    fl = -speedBase;
-    fr = speedBase;
-    rl = speedBase;
-    rr = -speedBase;
-  } else { // slide right
-    fl = speedBase;
-    fr = -speedBase;
-    rl = -speedBase;
-    rr = speedBase;
-  }
-
-  fl = constrain(fl + output, -100, 100);
-  rl = constrain(rl + output, -100, 100);
-  fr = constrain(fr - output, -100, 100);
-  rr = constrain(rr - output, -100, 100);
-
-  motor(1, fl);
-  motor(2, fr);
-  if (Set_Mode_Gyro == 0) {
-    motor(3, rl);
-    motor(4, rr);
-  }
-}
-
-// Loop-only mecanum slide with fixed target heading; call repeatedly in loop
-static inline void mecanumSlidePID_step(int dir, int speedBase, float targetYaw,
-                                        float kp, float ki, float kd)
-{
-  static float integral = 0.0f;
-  static float prev_error = 0.0f;
-  static unsigned long lastTime = millis();
-
-  float error = normalizeAngle(targetYaw - Con_yaw_loop1);
-
-  unsigned long now = millis();
-  float deltaTime = max((now - lastTime) / 1000.0f, 0.001f);
-  lastTime = now;
-
-  integral += error * deltaTime;
-  integral = constrain(integral, -50, 50);
-  float derivative = (error - prev_error) / deltaTime;
-  prev_error = error;
-  float output = kp * error + ki * integral + kd * derivative;
-
-  int fl, fr, rl, rr;
-  if (dir == 0) { // slide left
-    fl = -speedBase;
-    fr = speedBase;
-    rl = speedBase;
-    rr = -speedBase;
-  } else { // slide right
-    fl = speedBase;
-    fr = -speedBase;
-    rl = -speedBase;
-    rr = speedBase;
-  }
-
-  fl = constrain(fl + output, -100, 100);
-  rl = constrain(rl + output, -100, 100);
-  fr = constrain(fr - output, -100, 100);
-  rr = constrain(rr - output, -100, 100);
-
-  motor(1, fl);
-  motor(2, fr);
-  if (Set_Mode_Gyro == 0) {
-    motor(3, rl);
-    motor(4, rr);
-  }
-}
-
 void moveStraightPID_step(int Movedirection, float targetYaw_straight, int speedBase, float kp_straight, float kd_straight) {
     static float integral_straight = 0;
     static float preverror_straight = 0;
@@ -881,16 +490,8 @@ void moveStraightPID_step(int Movedirection, float targetYaw_straight, int speed
     if (Movedirection == 0) {
         motor(1, leftSpeed);
         motor(2, rightSpeed);
-        if(Set_Mode_Gyro == 0){
-            motor(3, leftSpeed);
-            motor(4, rightSpeed);
-        }
     } else {
         motor(1, -rightSpeed);
         motor(2, -leftSpeed);
-        if(Set_Mode_Gyro == 0){
-            motor(3, -rightSpeed);
-            motor(4, -leftSpeed);
-        } 
     }
 }

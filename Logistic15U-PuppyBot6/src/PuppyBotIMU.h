@@ -4,7 +4,8 @@
 
 #include "PuppyBotImuDevice.h"
 #include <Wire.h>
-#include "pio_encoder.h"
+#include "PuppyBotEncoders.h"
+#include "PuppyBotIMUStartup.h"
 
 #ifndef I2C_ADDR
 #define I2C_ADDR 0x69
@@ -13,8 +14,6 @@
 
 
 namespace PuppyBotIMU {
-    static PioEncoder encoder_PIO_M1(17);
-    static PioEncoder encoder_PIO_M2(19);
     
     static PuppyBotImuDevice icm;
     static float continuousYaw = 0;
@@ -24,64 +23,52 @@ namespace PuppyBotIMU {
     static float pitch = 0;
     static float roll = 0;
     static float Ref_offset_Con = 0;
-    static int state_begin_Encoder_M1 = 0;
-    static int state_begin_Encoder_M2 = 0;
-    static int Set_Mode_Gyro =0;
 
-    void setModeGyro(int modeGyro){
-        Set_Mode_Gyro = modeGyro;
-    }
     void resetBoard() {
         Serial.println("Rebooting...");
         //while (1);
     }
-    void init_encoder(int position_motor){
-        if(position_motor == 1){
-            pinMode(17, INPUT);
-            pinMode(18, INPUT);
-            pinMode(19, OUTPUT);
-            pinMode(20, OUTPUT);
-            state_begin_Encoder_M1 = 1;
-            encoder_PIO_M1.begin();
-        }
-        else{
-            pinMode(17, OUTPUT);
-            pinMode(18, OUTPUT);
-            pinMode(19, INPUT);
-            pinMode(20, INPUT);
-            state_begin_Encoder_M2 = 1;
-            encoder_PIO_M2.begin();
-        }
-    }
-    bool initIMU() {
+    bool initIMU(bool enabled = true) {
+        if (!startup.start(enabled)) return false;
         Wire1.setSDA(6);
         Wire1.setSCL(7);
         Wire1.begin();
         Wire1.setClock(400000);
         const bool initialized = icm.begin(Wire1, I2C_ADDR);
         Serial.println(initialized ? "ICM-20948 DMP ready" : "ICM-20948 initialization failed");
-        return initialized;
+        return startup.initialized(initialized, int(icm.status()));
     }
     bool isIMUReady() { return icm.ready(); }
     bool hasIMUSample() { return icm.hasSample(); }
     uint32_t getIMUSampleTimeMs() { return icm.sampleTimeMs(); }
     ICM_20948_Status_e getIMUStatus() { return icm.status(); }
-    void updateIMU_fine_offset_Yaw(int round) {
+    bool updateIMU_fine_offset_Yaw(int round) {
+      if (!startup.calibrate(round > 0 ? unsigned(round) : 0)) return false;
+      unsigned validSamples = 0;
+      uint32_t lastSampleAt = 0;
       for (int Rread = 0; Rread < round; Rread++) {
+        if (getIMUStartupState() != StartupState::Calibrating) return false;
         icm.update();
         if (icm.available()) {
           float qx = icm.x();
           float qy = icm.y();
           float qz = icm.z();
           float qw = icm.w();
-          read_Yaw = atan2(2.0 * (qw * qx + qy * qz), 1.0 - 2.0 * (qx * qx + qy * qy)) * 180.0 / PI;
-          if (read_Yaw < 0) { read_Yaw += 360; }
-          //Serial.print("  Yaw: "); Serial.println(Yaw);
+          const float yaw = atan2(2.0 * (qw * qx + qy * qz), 1.0 - 2.0 * (qx * qx + qy * qy)) * 180.0 / PI;
+          if (isfinite(yaw)) {
+            read_Yaw = yaw < 0 ? yaw + 360 : yaw;
+            lastSampleAt = millis();
+            startup.samples.store(++validSamples);
+          }
           icm.clearAvailable();
         }
         delay(10);
+        startup.completed.store(unsigned(Rread + 1));
       }
-      offset_yaw = read_Yaw;
+      // This verifies recent data, not physical stillness or gyro bias accuracy.
+      const bool freshData = validSamples > 0 && uint32_t(millis() - lastSampleAt) <= 250;
+      if (freshData) offset_yaw = read_Yaw;
+      return startup.finish(freshData);
     }
 
     void updateIMU() {
@@ -150,37 +137,6 @@ namespace PuppyBotIMU {
     // อัปเดต lastYaw
     lastYaw = currentYaw;
   }
-    int get_pulse_Encoder(int position_motor){
-        int count_encoder = 0;
-        if(position_motor == 1){
-            if(state_begin_Encoder_M1 == 0){
-            state_begin_Encoder_M1 = 1;
-            encoder_PIO_M1.begin();
-            
-            }
-            count_encoder =  encoder_PIO_M1.getCount();
-        }
-        
-        else{
-            if(state_begin_Encoder_M2 == 0){
-            state_begin_Encoder_M2 = 1;
-            encoder_PIO_M2.begin();
-            
-            }
-            count_encoder =  encoder_PIO_M2.getCount();
-        }
-        return count_encoder;
-        
-    }
-    void resetEncoder(int position_motor){
-        if(position_motor == 1){
-            encoder_PIO_M1.reset();
-        }
-        else{
-            encoder_PIO_M2.reset();
-        }
-        
-    }
 
 
     float getPitch() { updateIMU(); return pitch; }

@@ -12,6 +12,25 @@
         {
           "name": "Logistic15U-PuppyBot6",
           "architecture": "rp2040",
+          "version": "0.2.0",
+          "category": "Contributed",
+          "help": {
+            "online": "https://github.com/Amornthep-ra/Logistic15U-PuppyBot6"
+          },
+          "boards": [
+            {
+              "name": "Logistic15U-PuppyBot6"
+            }
+          ],
+          "toolsDependencies": [],
+          "archiveFileName": "logistic15u-rp2040-0.2.0.zip",
+          "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.2.0.zip",
+          "checksum": "SHA-256:3078daadb08ec0f71d7ef3570e6128877d50d185bcb46641b7659a6d73ac5d62",
+          "size": "11593"
+        },
+        {
+          "name": "Logistic15U-PuppyBot6",
+          "architecture": "rp2040",
           "version": "0.1.0",
           "category": "Contributed",
           "help": {

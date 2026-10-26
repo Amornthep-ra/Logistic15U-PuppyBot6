@@ -3,3 +3,4 @@ reference/legacy-imu/
 __pycache__/
 *.pyc
 
+*.ino.d

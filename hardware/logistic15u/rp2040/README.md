@@ -1,4 +1,4 @@
-# Logistic15U-PuppyBot6 0.1.0
+# Logistic15U-PuppyBot6 0.2.0
 
 Requires Earle Philhower Arduino-Pico `rp2040:rp2040@6.2.0` installed separately.
 FQBN: `logistic15u:rp2040:logistic15u`.

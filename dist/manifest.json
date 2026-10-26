@@ -1,71 +1,239 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "base_core": "rp2040:rp2040@6.2.0",
   "library": {
-    "archiveFileName": "Logistic15U-PuppyBot6-0.1.0.zip",
-    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.1.0.zip",
-    "checksum": "SHA-256:1872003287dae3f4f12e20e6727978430ba81923ad1f1c40043e051e3b412ebb",
-    "size": "21223",
+    "archiveFileName": "Logistic15U-PuppyBot6-0.2.0.zip",
+    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.0.zip",
+    "checksum": "SHA-256:98942c5b1668ebceadef057204e2f82bbe53dcb6001589a1ad8e5084246e1622",
+    "size": "104678",
     "files": [
+      {
+        "path": "Logistic15U-PuppyBot6/DRIVE_2WD.md",
+        "sha256": "a16860c2f6093ae4e0b4a33222fde6453d63ea89e357df78b9c52f6f255bca3c"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/EncoderDual/EncoderDual.ino",
+        "sha256": "704452ac6b030fcba1f9eadbbe4f5dd0fa5d6f5314aadfc2456fa4c17b773861"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/EncoderDual/README.md",
+        "sha256": "2697ca46ee9bc1312952590940ab4086bbac3a16c7177851e8bf806430aeb97e"
+      },
       {
         "path": "Logistic15U-PuppyBot6/examples/OriginalMain/OriginalMain.ino",
         "sha256": "bb16e53ce93b7d22e13bc90ac04083cf6e85af95d18ad784713ae3f0246345d2"
       },
       {
+        "path": "Logistic15U-PuppyBot6/examples/RGBCalibration/API.md",
+        "sha256": "3c30d932baf3de45fc9f3e32e8d1ddf7da318349302c46c639d84fc89b876ec3"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RGBCalibration/README.md",
+        "sha256": "b78138deb70252fe729287e63eb5fc21d1d10f1f72512dc9f3f3adc6f413e264"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RGBCalibration/RGBCalibration.ino",
+        "sha256": "0b12ba6fedf469e3304d2effc9f085fdfe918f216285cf600252744daa1fa70e"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RGBClassify/README.md",
+        "sha256": "8069c5a9a68499e11e69d2f3b3665645022c6fa48db723d55760acb7af61570a"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RGBClassify/RGBClassify.ino",
+        "sha256": "07bb3d2bc83e9e1dfc4b3e7bfe748f8a04e12a540bef3816d7a0c94afdd7cb4c"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RGBMonitor/README.md",
+        "sha256": "959870f17965546d0f76b3f3258ad3c0e79fb1ce6edebac818713a17a6b160b4"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/RGBMonitor/RGBMonitor.ino",
+        "sha256": "20aab687de3c398e2efb890a0313a80808189622d235fb5a8e0891a6f050d28c"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/examples/WheelSpeedMeasure/WheelSpeedMeasure.ino",
+        "sha256": "371c3591b544249def1687b0aa804bf7e74a1b676dd9997500c27997dd2b187c"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/IMU_STARTUP.md",
+        "sha256": "ef22bf6e3ce1f755ab2e9bb4a6b3d02f8ac9208d8e94749cb4b118095bc156df"
+      },
+      {
         "path": "Logistic15U-PuppyBot6/library.properties",
-        "sha256": "df0d0a18c355dddd01c998940a76c90715526664b163ca8de3b9b630b6328cfa"
+        "sha256": "b4feae7af8a1145c5929adb5e2ac84268117e9de5c65b51f381c6c0cc33c3133"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/LINE_CALIBRATION.md",
+        "sha256": "ad9545afec2497e49a9cc0d25804069e7a48bf31555d97b2f10b13087ab78de2"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/LINE_PD_MONITOR.md",
+        "sha256": "76ee6dcfda1d91fc5d15696f6240c567d0e34fb2dc28910e8d123fbd2872bf3d"
       },
       {
         "path": "Logistic15U-PuppyBot6/NOTICE.md",
         "sha256": "392f7e7b25bcbd03b254a476e517f20ae49c639848af495fb6e9ad7928da6380"
       },
       {
+        "path": "Logistic15U-PuppyBot6/README.md",
+        "sha256": "25bd53eba3de1bdabde1e39701bac2267a3b50e27d8ba03df0ab4866dbc6a164"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/SERVO_API.md",
+        "sha256": "30489dce8372aac71417b5483b1a0e5e0cafccb5361643f4dccefbff1bac774f"
+      },
+      {
         "path": "Logistic15U-PuppyBot6/src/KB_PIDFollowHelpers.h",
-        "sha256": "a4e505de760e5200204a8a2a39f7be7eb5935b12742e5c57b1afb287b4c357ee"
+        "sha256": "5cc14bd6a3aebcb9c86a3967c9bed9990a89cb57539b24388c4da8329d8b2310"
       },
       {
         "path": "Logistic15U-PuppyBot6/src/Logistic15U_PuppyBot6.h",
-        "sha256": "52424126eb06f6de8c39fe73e7e0e47dad4cb2cc4d435521f72c42d1efa83f39"
+        "sha256": "fc22ebdb785aebb2e8a9f766e0e13e509005f00ee00ec6b15f9cd3f2d393db7c"
       },
       {
         "path": "Logistic15U-PuppyBot6/src/puppybot.h",
-        "sha256": "4a4dd38b6766dadd3795c418ed6607a0c180c2767209216f6889c56621a40601"
+        "sha256": "77ce7d4449b21d0adacf0f68708ee380d03361d422bb692bbd9fbcbc2502fdb8"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotButtons.h",
+        "sha256": "abce8c92bdc3ec9c5fc5dd6adc8df75ee515398b4953a4312c77f8e639b87021"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotBuzzer.h",
+        "sha256": "25d3acc7c60924a852d19bb664ddbc26fe81cfc4553edd5ffe3997a245f14484"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotEncoderLinePD.h",
+        "sha256": "671e51dbf7926b94cd7fc2b90026a7df84fa9d73bfb3346f9c6887423fc623e0"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotEncoders.h",
+        "sha256": "4fe46748a48055f88da62977ee0f2819837b0ae1b676fa5f4ca884923ef7dd2c"
       },
       {
         "path": "Logistic15U-PuppyBot6/src/PuppyBotIMU.h",
-        "sha256": "99e76c608ebd095d256c439c5775bda64c4caf87ac467e6099a3469f6123a68c"
+        "sha256": "b7d0ec68b4446944210592c7c25bb315980ebbae5ffe46a6d546a6a48bc393e4"
       },
       {
         "path": "Logistic15U-PuppyBot6/src/PuppyBotImuDevice.h",
         "sha256": "98bbd05563e8d51bb1ec5b7d75482862545abf6010ead038349573f72b2bc0e6"
       },
       {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotIMUStartup.h",
+        "sha256": "19767a3d6ea9add002c0c7e5d0ff20e8d7b390fdf5cb207da6f3893dced29b5f"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotIMUStartupDisplay.h",
+        "sha256": "054db93d69e555af21d674682331feec10dc4f846f22ea7717ab031d24f0e0c1"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotLineCalibration.h",
+        "sha256": "f85fd38759d04f0b3edd843538bbd62e2df46a61411dd00d952fac2ea8eb7f15"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotLineCalibrationMenu.h",
+        "sha256": "f85509a1dc57b39b9c6750b0f409075b099a85cd9741f37ae96fbcc8ad6180ec"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotLinePD.h",
+        "sha256": "c2eb16c0c5863fccc90193cb3de236da68861fb8c0b0e7f53c4804097af06141"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotLinePDMonitor.h",
+        "sha256": "4b1fef75b7bf529578bcf5f6e9f7ba57d7c8db34024eee856e7588ea29d3c722"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotLineSensors.h",
+        "sha256": "0619257d07afb791ad89dc07d0f4d343e19943345c7f94de632a0316b99f0186"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGB.h",
+        "sha256": "0e405d564c19170239aa59664b2e2c7e782f392917fa664b63908a5d4aa92902"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBCalibration.h",
+        "sha256": "effa90118c135ef646ebd11ed6b1b291e032902fe5a439d229ab57ca5c9af762"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBCalibrationControl.h",
+        "sha256": "f65f23297b13561323f30bfd0c7aa90e26f87d461dd67c1e4fb09fa565aef949"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBCalibrationDisplay.h",
+        "sha256": "1727081920d378dbf883637f3e2fc7e3ccb13adcb07e86d1232386549b2584f2"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBCalibrationFeedback.h",
+        "sha256": "fad0f971370ee1c139fe8c3609203b30100ff737f51c092a560daf5b56805441"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBCalibrationStorage.h",
+        "sha256": "b65986ca783c62b71aebb5e9a3c842ab4ce38cdf8bb3d31214e20021374588b7"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBClassifier.h",
+        "sha256": "c7d899db7042db22e90a9239de4efb102326be24e16fcf92d523fe6448034fdb"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBColorDisplay.h",
+        "sha256": "1a860d73b68ca716c20516ef29eb3d2e6c535539ef2d320d085e89b91edb9256"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBDisplay.h",
+        "sha256": "5517355fd3ce87dd6c411f5e7e571c3a09f297966d446bd2637cb9292db5bbe6"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBMode.h",
+        "sha256": "f11b8d6a01c3be2c4df07373d3b776d1596691a1305b3d7a590edee6ad0b4998"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotRGBSettings.h",
+        "sha256": "d627c5229ad65813b1286bf94b5797f36385317a05f0cc5ab921e6ce2ae2eb9d"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotServos.h",
+        "sha256": "29b3c30d7497ef31ff7e01d548e0f59a837afe6fb45cd4c5e041c705bb87d23d"
+      },
+      {
         "path": "Logistic15U-PuppyBot6/src/PuppyBotTurnPID.h",
-        "sha256": "b240a53785667f64716512bc4c66e5cd16a44b67cb498f10d02af22a1ed0e866"
+        "sha256": "abc926533c428c290037769a98ba437cbfca6ec49fe8c81986e558d1f66c3209"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotWaitSW1.h",
+        "sha256": "b7af42cd7e29a5c583a51717f9d13774061c1883e7a4b4680b9014f26b7beb02"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/src/PuppyBotWheelSpeedControl.h",
+        "sha256": "88c72b4cdc628d58b21fcb7d4e0d05ddd50bee63eaf69e40b0242aa79e7d8b49"
+      },
+      {
+        "path": "Logistic15U-PuppyBot6/WHEEL_SPEED_CONTROL.md",
+        "sha256": "929a5904ed097374f010acf2261b87304d7d7f83a51ef118a5c20eab6084b689"
       }
     ]
   },
   "board": {
-    "archiveFileName": "logistic15u-rp2040-0.1.0.zip",
-    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.1.0.zip",
-    "checksum": "SHA-256:f65db16b352b1aa291c5afa14e0b803bc46f6963a3a9685a1d5a686318ab33cb",
-    "size": "11597",
+    "archiveFileName": "logistic15u-rp2040-0.2.0.zip",
+    "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/logistic15u-rp2040-0.2.0.zip",
+    "checksum": "SHA-256:3078daadb08ec0f71d7ef3570e6128877d50d185bcb46641b7659a6d73ac5d62",
+    "size": "11593",
     "files": [
       {
-        "path": "logistic15u-rp2040-0.1.0/boards.txt",
+        "path": "logistic15u-rp2040-0.2.0/boards.txt",
         "sha256": "26930f3ad7464360587b480efe36c2bca1bfbd0ea87947bedac75ce84f8d75a7"
       },
       {
-        "path": "logistic15u-rp2040-0.1.0/LICENSE.arduino-pico",
+        "path": "logistic15u-rp2040-0.2.0/LICENSE.arduino-pico",
         "sha256": "20c17d8b8c48a600800dfd14f95d5cb9ff47066a9641ddeab48dc54aec96e331"
       },
       {
-        "path": "logistic15u-rp2040-0.1.0/platform.txt",
-        "sha256": "35e7a0a0f285888615d2b56d45cab3900b15089bb3fa7cd80756d554aedaefe0"
+        "path": "logistic15u-rp2040-0.2.0/platform.txt",
+        "sha256": "d42c92c7e2c3985a92ddbc07b2127a87b38326e3de66f5555779f85d6965ccb0"
       },
       {
-        "path": "logistic15u-rp2040-0.1.0/README.md",
-        "sha256": "99f2c9bc9e4d08d95fd0bd16629d5a13f5d9bfb217fc032703162e1723a4c12d"
+        "path": "logistic15u-rp2040-0.2.0/README.md",
+        "sha256": "0476ab951bd5959cc7dc1fac9e952816cbbb08d23298832d54cba68785ffb5f1"
       }
     ]
   }
