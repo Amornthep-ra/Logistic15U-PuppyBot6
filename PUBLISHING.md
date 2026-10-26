@@ -5,7 +5,7 @@ Repository เป้าหมาย: https://github.com/Amornthep-ra/Logistic15U
 ## สถานะ
 
 - **0.1.0:** เผยแพร่บน `main` แล้ว (commit `04f744b`) ผลตรวจ URL อยู่ใน `PUBLIC_URL_VERIFICATION.md`
-- **0.2.0:** build ZIP, index และ manifest ในเครื่องแล้ว **ยังไม่ได้ commit หรือ push**
+- **0.2.0:** เผยแพร่บน `main` แล้ว (commit `4769eba`) ทดสอบติดตั้งจาก URL สาธารณะผ่าน ผลอยู่ใน `PUBLIC_URL_VERIFICATION.md`
 
 ## ไฟล์ของ 0.2.0
 
