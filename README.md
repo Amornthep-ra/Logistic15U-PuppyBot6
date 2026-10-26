@@ -92,6 +92,11 @@ Wire, SPI, Pico SDK และ toolchain มาจาก Arduino-Pico ไม่�
 - `COPY_MANIFEST.json`: หลักฐานขั้นคัดลอกเดิม ไม่ใช่ manifest ปัจจุบัน
 
 ไม่ได้แจกจ่าย InvenSense SDK `Invn` เดิม ใช้ SparkFun จาก Library Manager แทน
-dependency มาตรฐานและ build cache ไม่อยู่ใน ZIP ดูที่มาและสิทธิ์ใน [NOTICE.md](Logistic15U-PuppyBot6/NOTICE.md)
+dependency มาตรฐานและ build cache ไม่อยู่ใน ZIP ดูที่มาใน [NOTICE.md](Logistic15U-PuppyBot6/NOTICE.md)
+
+## License
+
+MIT License — Copyright (c) 2026 PrinceBot ดู [LICENSE](LICENSE)
+ยกเว้น `hardware/logistic15u/rp2040/boards.txt` ซึ่งดัดแปลงจาก Arduino-Pico และใช้ license ต้นทางใน [LICENSE.arduino-pico](hardware/logistic15u/rp2040/LICENSE.arduino-pico)
 
 หากเคยคอมไพล์แล้วเลือก Adafruit ST7735 1.0.8 จาก cache จนพบ `setSPISpeed` ไม่มีใน class ให้คอมไพล์ด้วย CLI `--clean` ตาม VERIFICATION.md; ไม่ต้องลบไลบรารีเดิมของโครงการอื่น

@@ -34,6 +34,6 @@ Package index ยังเก็บรายการแพลตฟอร์ม
 การแจก library ด้วย ZIP ใช้ได้ทันทีหลังเผยแพร่ แต่ยังไม่ได้ยื่นลงทะเบียน
 Arduino Library Manager กลาง การเพิ่ม Board Manager URL ไม่ได้ติดตั้ง library ให้อัตโนมัติ
 
-## ก่อนเผยแพร่สาธารณะ
+## License
 
-ไม่มีไฟล์ LICENSE และ `Logistic15U-PuppyBot6/NOTICE.md` ระบุว่าโค้ด API มาจาก PuppyBot6-New ของ KBIDE โดยไม่ได้ให้สิทธิ์ใหม่ ควรยืนยันสิทธิ์แจกจ่ายต่อกับเจ้าของโค้ดต้นฉบับก่อนประกาศ URL
+MIT License, Copyright (c) 2026 PrinceBot (เจ้าของโค้ด PuppyBot6-New) มี `LICENSE` ทั้งที่ root และใน `Logistic15U-PuppyBot6/` เพื่อให้รวมอยู่ใน Library ZIP

@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VERSION = '0.2.0'
 # 0.1.0 archives stay published because the package index still lists that platform.
 files = [ROOT / name for name in (
-    '.gitignore', '.gitattributes',
+    '.gitignore', '.gitattributes', 'LICENSE',
     'BOARD_PROFILE.json', 'COPY_MANIFEST.json', 'DEPENDENCIES.json',
     'package_logistic15u_index.json', 'dist/manifest.json',
     'dist/Logistic15U-PuppyBot6-0.1.0.zip', 'dist/logistic15u-rp2040-0.1.0.zip',

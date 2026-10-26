@@ -4,8 +4,8 @@
   "library": {
     "archiveFileName": "Logistic15U-PuppyBot6-0.2.0.zip",
     "url": "https://raw.githubusercontent.com/Amornthep-ra/Logistic15U-PuppyBot6/main/dist/Logistic15U-PuppyBot6-0.2.0.zip",
-    "checksum": "SHA-256:98942c5b1668ebceadef057204e2f82bbe53dcb6001589a1ad8e5084246e1622",
-    "size": "104678",
+    "checksum": "SHA-256:97038388e6f08688e35449664fa5aaf4b9112737cb615b997b3eeec8b8d08c16",
+    "size": "105490",
     "files": [
       {
         "path": "Logistic15U-PuppyBot6/DRIVE_2WD.md",
@@ -64,6 +64,10 @@
         "sha256": "b4feae7af8a1145c5929adb5e2ac84268117e9de5c65b51f381c6c0cc33c3133"
       },
       {
+        "path": "Logistic15U-PuppyBot6/LICENSE",
+        "sha256": "452545afa7b363502021e95f8088ec2d7091a90cf75ca5a83d66367094532488"
+      },
+      {
         "path": "Logistic15U-PuppyBot6/LINE_CALIBRATION.md",
         "sha256": "ad9545afec2497e49a9cc0d25804069e7a48bf31555d97b2f10b13087ab78de2"
       },
@@ -73,11 +77,11 @@
       },
       {
         "path": "Logistic15U-PuppyBot6/NOTICE.md",
-        "sha256": "392f7e7b25bcbd03b254a476e517f20ae49c639848af495fb6e9ad7928da6380"
+        "sha256": "e0a504b538cd5117b26ea753b4a640005d3f97bce61acc0d77a0d2b45565bf4e"
       },
       {
         "path": "Logistic15U-PuppyBot6/README.md",
-        "sha256": "25bd53eba3de1bdabde1e39701bac2267a3b50e27d8ba03df0ab4866dbc6a164"
+        "sha256": "d7f08ba138322062a57ad1b60bcbb078ec3eb5ce7a339c8950024162c0981aca"
       },
       {
         "path": "Logistic15U-PuppyBot6/SERVO_API.md",

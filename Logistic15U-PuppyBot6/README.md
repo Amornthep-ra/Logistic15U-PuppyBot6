@@ -113,6 +113,8 @@ File → Examples → Logistic15U-PuppyBot6
 - การแยกสีทดสอบด้วยข้อมูลจำลองในซอฟต์แวร์ ยังไม่มีผลยืนยันความแม่นยำบนหุ่นจริง
 - ยังไม่ได้ลงทะเบียนใน Arduino Library Manager กลาง ต้องติดตั้งจาก ZIP
 
-## ที่มาและสิทธิ์
+## License
 
-ดู [NOTICE.md](NOTICE.md) โค้ด API มาจาก PuppyBot6-New ของ KBIDE รุ่น 3.5.8 และการจัดแพ็กเกจนี้ไม่ได้ให้สิทธิ์ใหม่เหนือโค้ดต้นฉบับหรือของบุคคลที่สาม ไม่มีการแจกจ่าย InvenSense SDK เดิม
+MIT License — Copyright (c) 2026 PrinceBot ดู [LICENSE](LICENSE)
+
+โค้ด API มาจาก PuppyBot6-New (KBIDE รุ่น 3.5.8) ของ PrinceBot dependency ที่ติดตั้งแยก (Adafruit, SparkFun, rp2040-encoder-library) ใช้ license ของแต่ละโครงการ ไม่มีการแจกจ่าย InvenSense SDK เดิม รายละเอียดใน [NOTICE.md](NOTICE.md)
